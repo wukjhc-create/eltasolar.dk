@@ -48,6 +48,12 @@
         .section-title-underline::after{content:'';position:absolute;bottom:-8px;left:0;width:60px;height:4px;background:linear-gradient(90deg,var(--accent-orange),var(--primary-green));border-radius:2px}
         .section-subtitle{font-size:1.125rem;color:var(--gray-500);max-width:600px}
         .header{position:fixed;top:0;left:0;right:0;background:rgba(255,255,255,.98);backdrop-filter:blur(10px);box-shadow:0 1px 3px rgba(0,0,0,.1);z-index:1000;padding:15px 0;transition:all .3s ease}
+        .announcement-bar{background:linear-gradient(135deg,#0a1628 0%,#0d3320 100%);padding:10px 0;text-align:center;position:fixed;top:0;left:0;right:0;z-index:1001}
+        .announcement-bar a{color:#fff;font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+        .announcement-bar a:hover{color:var(--accent-orange)}
+        .announcement-bar .badge{background:var(--accent-orange);color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px;text-transform:uppercase}
+        .has-announcement .header{top:40px}
+        .has-announcement .hero{padding-top:120px}
         .header.scrolled{padding:10px 0;box-shadow:0 4px 20px rgba(0,0,0,.1)}
         .nav{display:flex;align-items:center;justify-content:space-between}
         .logo{display:flex;align-items:center;gap:10px;z-index:1001}
@@ -58,6 +64,8 @@
         .nav-link:hover{color:var(--primary-green);background:var(--primary-green-light)}
         .nav-cta{background:linear-gradient(135deg,var(--accent-orange) 0%,var(--accent-orange-dark) 100%);color:#fff!important;padding:10px 20px;border-radius:8px;margin-left:10px}
         .nav-cta:hover{transform:translateY(-2px);box-shadow:0 4px 15px rgba(249,115,22,.4)}
+        .nav-bess{background:linear-gradient(135deg,var(--primary-green) 0%,var(--primary-green-dark) 100%);color:#fff!important;padding:8px 16px;border-radius:6px}
+        .nav-bess:hover{transform:translateY(-2px);box-shadow:0 4px 15px rgba(5,150,105,.4)}
         .nav-dropdown{position:relative}
         .nav-dropdown>.nav-link{display:flex;align-items:center;gap:4px}
         .dropdown-menu{position:absolute;top:100%;left:50%;transform:translateX(-50%);background:#fff;min-width:240px;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,.15);opacity:0;visibility:hidden;transition:all .3s ease;padding:8px;margin-top:15px}
@@ -77,7 +85,7 @@
         .hero-title span{background:linear-gradient(135deg,var(--primary-green) 0%,#10b981 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
         .hero-description{font-size:1.25rem;color:rgba(255,255,255,.7);margin-bottom:32px;max-width:500px}
         .hero-buttons{display:flex;gap:16px;flex-wrap:wrap}
-        .hero-stats{display:flex;gap:40px;margin-top:48px;padding-top:32px;border-top:1px solid rgba(255,255,255,.1)}
+        .hero-stats{display:flex;gap:40px;margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1)}
         .stat-item{text-align:left}
         .stat-number{font-size:2.5rem;font-weight:800;color:var(--accent-orange)}
         .stat-label{font-size:14px;color:rgba(255,255,255,.6)}
@@ -93,7 +101,7 @@
         .hero-info-value{font-size:12px;color:rgba(255,255,255,.7)}
 
         /* BESS Section */
-        .bess-section{background:linear-gradient(135deg,#0a1628 0%,#0f2744 50%,#0d3320 100%);padding:100px 0;position:relative;overflow:hidden}
+        .bess-section{background:linear-gradient(135deg,#0a1628 0%,#0f2744 50%,#0d3320 100%);padding:60px 0;position:relative;overflow:hidden}
         .bess-section::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
         .bess-orb{position:absolute;border-radius:50%;filter:blur(150px);opacity:.3}
         .bess-orb-1{width:600px;height:600px;background:var(--primary-green);top:-200px;right:-100px}
@@ -104,9 +112,9 @@
         .bess-badge span{font-size:13px;font-weight:600;color:var(--primary-green);text-transform:uppercase;letter-spacing:1px}
         .bess-title{font-size:3rem;font-weight:800;color:#fff;margin-bottom:16px;line-height:1.2}
         .bess-title span{background:linear-gradient(135deg,var(--primary-green),var(--accent-orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-        .bess-subtitle{font-size:1.25rem;color:rgba(255,255,255,.7);max-width:600px;margin-bottom:48px}
-        .bess-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:60px}
-        .bess-stat-card{background:linear-gradient(135deg,rgba(255,255,255,.1),rgba(255,255,255,.05));backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:32px 24px;text-align:center;transition:all .4s ease;position:relative;overflow:hidden;animation:float 3s ease-in-out infinite}
+        .bess-subtitle{font-size:1.25rem;color:rgba(255,255,255,.7);max-width:600px;margin-bottom:32px}
+        .bess-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:40px}
+        .bess-stat-card{background:linear-gradient(135deg,rgba(255,255,255,.1),rgba(255,255,255,.05));backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:24px 20px;text-align:center;transition:all .4s ease;position:relative;overflow:hidden;animation:float 3s ease-in-out infinite}
         .bess-stat-card:nth-child(2){animation-delay:.3s}
         .bess-stat-card:nth-child(3){animation-delay:.6s}
         .bess-stat-card:nth-child(4){animation-delay:.9s}
@@ -118,21 +126,21 @@
         .bess-stat-number{font-size:2.5rem;font-weight:800;color:#fff;margin-bottom:8px}
         .bess-stat-number span{font-size:1.5rem}
         .bess-stat-label{font-size:14px;color:rgba(255,255,255,.6);font-weight:500}
-        .bess-features{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-        .bess-feature-list{display:flex;flex-direction:column;gap:24px}
-        .bess-feature-item{display:flex;gap:16px;padding:20px;background:rgba(255,255,255,.05);border-radius:16px;border:1px solid rgba(255,255,255,.1);transition:all .3s ease}
+        .bess-features{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+        .bess-feature-list{display:flex;flex-direction:column;gap:16px}
+        .bess-feature-item{display:flex;gap:16px;padding:16px;background:rgba(255,255,255,.05);border-radius:16px;border:1px solid rgba(255,255,255,.1);transition:all .3s ease}
         .bess-feature-item:hover{background:rgba(255,255,255,.1);transform:translateX(10px)}
         .bess-feature-icon{width:48px;height:48px;background:linear-gradient(135deg,var(--primary-green),var(--primary-green-dark));border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
         .bess-feature-icon svg{width:24px;height:24px;color:#fff}
         .bess-feature-text h4{font-size:16px;font-weight:700;color:#fff;margin-bottom:4px}
         .bess-feature-text p{font-size:14px;color:rgba(255,255,255,.6)}
         .bess-visual{display:flex;align-items:center;justify-content:center}
-        .bess-circle{width:350px;height:350px;border-radius:50%;background:linear-gradient(135deg,rgba(5,150,105,.2),rgba(249,115,22,.2));display:flex;align-items:center;justify-content:center;position:relative;animation:glow 3s infinite}
-        .bess-circle::before{content:'';position:absolute;inset:20px;border-radius:50%;border:2px dashed rgba(255,255,255,.2)}
-        .bess-circle-inner{width:250px;height:250px;border-radius:50%;background:linear-gradient(135deg,rgba(5,150,105,.3),rgba(249,115,22,.3));display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px}
+        .bess-circle{width:300px;height:300px;border-radius:50%;background:linear-gradient(135deg,rgba(5,150,105,.2),rgba(249,115,22,.2));display:flex;align-items:center;justify-content:center;position:relative;animation:glow 3s infinite}
+        .bess-circle::before{content:'';position:absolute;inset:15px;border-radius:50%;border:2px dashed rgba(255,255,255,.2)}
+        .bess-circle-inner{width:220px;height:220px;border-radius:50%;background:linear-gradient(135deg,rgba(5,150,105,.3),rgba(249,115,22,.3));display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:25px}
         .bess-circle-text{font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px}
         .bess-circle-value{font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--primary-green),var(--accent-orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-        .bess-cta{text-align:center;margin-top:60px}
+        .bess-cta{text-align:center;margin-top:40px}
         .bess-cta .btn{background:linear-gradient(135deg,var(--primary-green),var(--primary-green-dark));padding:18px 40px;font-size:16px;animation:glow 2s infinite}
         .bess-cta .btn:hover{transform:translateY(-3px)}
 
@@ -388,23 +396,26 @@
         }
     </style>
 </head>
-<body>
+<body class="has-announcement">
+    <div class="announcement-bar">
+        <a href="#bess" onclick="showSection('forside','bess');return false;"><span class="badge">Nyt</span> 💰 Tjen op til 125.000 kr./år på dit batterianlæg → Læs mere</a>
+    </div>
     <header class="header" id="header">
         <nav class="nav container">
-            <a class="logo" onclick="showSection('forside')"><div class="logo-icon"><img src="logo.png" alt="ELTA Solar"></div></a>
+            <a class="logo" href="#" onclick="showSection('forside');return false;"><div class="logo-icon"><img src="logo.png" alt="ELTA Solar"></div></a>
             <ul class="nav-menu" id="nav-menu">
-                <li><a class="nav-link" onclick="showSection('forside')">Forside</a></li>
-                <li><a class="nav-link" onclick="showSection('forside','ydelser')">Ydelser</a></li>
-                <li><a class="nav-link" onclick="showSection('forside','bess')">Batterianlæg</a></li>
+                <li><a class="nav-link" href="#" onclick="showSection('forside');return false;">Forside</a></li>
+                <li><a class="nav-link" href="#ydelser" onclick="showSection('forside','ydelser');return false;">Ydelser</a></li>
+                <li><a class="nav-link nav-bess" href="#bess" onclick="showSection('forside','bess');return false;">⚡ Batterianlæg</a></li>
                 <li class="nav-dropdown">
                     <a class="nav-link">Om os <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="6 9 12 15 18 9"/></svg></a>
                     <ul class="dropdown-menu">
-                        <li><a onclick="showSection('om-virksomheden')">Om virksomheden</a></li>
-                        <li><a onclick="showSection('cookies')">Cookie- og privatlivspolitik</a></li>
-                        <li><a onclick="showSection('priser')">Priser og vilkår</a></li>
+                        <li><a href="#om-virksomheden" onclick="showSection('om-virksomheden');return false;">Om virksomheden</a></li>
+                        <li><a href="#cookies" onclick="showSection('cookies');return false;">Cookie- og privatlivspolitik</a></li>
+                        <li><a href="#priser" onclick="showSection('priser');return false;">Priser og vilkår</a></li>
                     </ul>
                 </li>
-                <li><a class="nav-link nav-cta" onclick="showSection('forside','kontakt')">Kontakt</a></li>
+                <li><a class="nav-link nav-cta" href="#kontakt" onclick="showSection('forside','kontakt');return false;">Kontakt</a></li>
             </ul>
             <button class="nav-toggle" id="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
         </nav>
