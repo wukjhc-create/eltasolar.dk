@@ -32,7 +32,7 @@ export default async function SyncPage() {
           <p className="text-slate-500">
             Ingen synkronisering kørt endnu. Tryk på &quot;Synkronisér nu&quot; for at hente
             medarbejdere og planlagte sager fra Ordrestyring. Herefter kører den automatisk
-            hvert 5. minut.
+            hvert 2. minut.
           </p>
         )}
 
@@ -92,7 +92,7 @@ export default async function SyncPage() {
         <div className="border-t border-slate-100 pt-4 text-sm text-slate-500 space-y-2">
           <p>
             <strong className="text-slate-700">Sådan virker det:</strong> Ordrestyring bestemmer,
-            hvem der er på hvilke sager og hvornår. Tavlen henter det automatisk hvert 5. minut.
+            hvem der er på hvilke sager og hvornår. Tavlen henter det automatisk hvert 2. minut.
           </p>
           <p>
             <strong className="text-slate-700">Ordrestyring er den eneste sandhed:</strong>{" "}

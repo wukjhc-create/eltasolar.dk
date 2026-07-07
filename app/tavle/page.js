@@ -65,7 +65,7 @@ export default async function BoardPage({ searchParams }) {
 
   return (
     <main className="board-scene min-h-screen bg-[#070b14] p-6 text-slate-100">
-      <AutoRefresh seconds={15} />
+      <AutoRefresh seconds={10} />
 
       {/* Toplinje */}
       <header className="flex items-end justify-between gap-6 mb-5">
