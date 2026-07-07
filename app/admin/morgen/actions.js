@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
 import { bumpDataVersion } from "@/lib/version";
+import { reconcileReturn } from "@/lib/returns";
 import { RETURN_REASONS } from "@/lib/status";
 
 async function refresh() {
@@ -23,10 +24,10 @@ export async function resolveCase(formData) {
   if (decision === "tilbage") {
     const reason = formData.get("return_reason");
     fields.return_reason = RETURN_REASONS.includes(reason) ? reason : "Andet";
-    fields.was_returned = true; // taeller i statistikken for altid
   }
 
   const { error } = await db().from("tasks").update(fields).eq("order_number", orderNumber);
   if (error) throw new Error(error.message);
+  await reconcileReturn(null, orderNumber, null, decision, fields.return_reason || null);
   await refresh();
 }

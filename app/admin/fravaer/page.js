@@ -152,7 +152,7 @@ export default async function AbsencePage({ searchParams }) {
       </div>
 
       <p className="text-xs text-slate-400 mt-4">
-        Klik på en dag for at markere fravær med medarbejderens standardtimer. Klik igen for at fjerne.
+        Klik på en dag for at markere SYGDOM med medarbejderens standardtimer (klik igen for at fjerne). Ferie/fri hentes automatisk fra Ordrestyring - eller registreres med formularen med årsagen "ferie".
       </p>
     </main>
   );

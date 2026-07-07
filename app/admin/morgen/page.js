@@ -24,7 +24,7 @@ export default async function MorningReview({ searchParams }) {
       </div>
       <p className="text-sm text-slate-500 mb-5 max-w-2xl">
         Sager fra seneste arbejdsdag ({formatDate(prevDay)}), der hverken er lukket eller
-        planlagt videre. Kryds af: blev den færdig, eller skal den køre tilbage? Sager, der
+        planlagt videre. Kryds af: blev den færdig, eller skal den køre tilbage? Afgøres i Ordrestyring – tavlen følger med. Sager, der
         allerede er planlagt igen i Ordrestyring, vises ikke – de kører efter planen.
       </p>
 
@@ -51,30 +51,37 @@ export default async function MorningReview({ searchParams }) {
                     .join(" · ")}
                 </div>
               </div>
-              <form action={resolveCase} className="flex items-center gap-2">
-                <input type="hidden" name="order_number" value={c.orderNumber} />
-                <button
-                  type="submit"
-                  name="decision"
-                  value="lukket"
-                  className="btn bg-green-600 text-white hover:bg-green-500"
-                >
-                  ✓ Færdig
-                </button>
-                <select name="return_reason" defaultValue="Andet" className="input w-auto py-2">
-                  {RETURN_REASONS.map((r) => (
-                    <option key={r} value={r}>{r}</option>
-                  ))}
-                </select>
-                <button
-                  type="submit"
-                  name="decision"
-                  value="tilbage"
-                  className="btn-danger"
-                >
-                  ↩ Tilbage
-                </button>
-              </form>
+              {c.synced ? (
+                <div className="rounded border border-blue-200 bg-blue-50 px-3 py-2 text-sm text-blue-800">
+                  → Sæt status i <strong>Ordrestyring</strong>: &quot;klar til fakturering&quot;
+                  eller &quot;kræver genbesøg&quot; – tavlen følger med af sig selv.
+                </div>
+              ) : (
+                <form action={resolveCase} className="flex items-center gap-2">
+                  <input type="hidden" name="order_number" value={c.orderNumber} />
+                  <button
+                    type="submit"
+                    name="decision"
+                    value="lukket"
+                    className="btn bg-green-600 text-white hover:bg-green-500"
+                  >
+                    ✓ Færdig
+                  </button>
+                  <select name="return_reason" defaultValue="Andet" className="input w-auto py-2">
+                    {RETURN_REASONS.map((r) => (
+                      <option key={r} value={r}>{r}</option>
+                    ))}
+                  </select>
+                  <button
+                    type="submit"
+                    name="decision"
+                    value="tilbage"
+                    className="btn-danger"
+                  >
+                    ↩ Tilbage
+                  </button>
+                </form>
+              )}
             </div>
           ))}
         </div>

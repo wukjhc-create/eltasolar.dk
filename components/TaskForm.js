@@ -6,8 +6,16 @@ import { STATUSES, STATUS_ORDER, RETURN_REASONS } from "@/lib/status";
 export default function TaskForm({ task, employees, action, deleteAction, weekParam }) {
   const t = task || {};
   const activeEmployees = employees.filter((e) => e.active);
+  const fromOs = !!t.os_identifier;
   return (
     <form action={action} className="card p-6 max-w-2xl space-y-4">
+      {fromOs && (
+        <div className="rounded border border-blue-200 bg-blue-50 px-3 py-2 text-sm text-blue-800">
+          🔒 Denne sag kommer fra Ordrestyring. Status, tilbage-årsag og statistik styres
+          derfra og genberegnes automatisk ved hver synkronisering – ret sagen i
+          Ordrestyring, hvis noget er forkert.
+        </div>
+      )}
       {t.id && <input type="hidden" name="id" value={t.id} />}
       <input type="hidden" name="uge" value={weekParam || ""} />
 
@@ -46,7 +54,7 @@ export default function TaskForm({ task, employees, action, deleteAction, weekPa
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="label" htmlFor="status">Status</label>
-          <select id="status" name="status" defaultValue={t.status || "planlagt"} className="input">
+          <select id="status" name="status" defaultValue={t.status || "planlagt"} className="input" disabled={fromOs}>
             {STATUS_ORDER.map((key) => (
               <option key={key} value={key}>{STATUSES[key].label}</option>
             ))}
@@ -54,7 +62,7 @@ export default function TaskForm({ task, employees, action, deleteAction, weekPa
         </div>
         <div>
           <label className="label" htmlFor="return_reason">Tilbage-årsag (kun ved status Tilbage)</label>
-          <select id="return_reason" name="return_reason" defaultValue={t.return_reason || "Andet"} className="input">
+          <select id="return_reason" name="return_reason" defaultValue={t.return_reason || "Andet"} className="input" disabled={fromOs}>
             {RETURN_REASONS.map((r) => (
               <option key={r} value={r}>{r}</option>
             ))}

@@ -55,3 +55,194 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .board-lukket, .board-tilbage, .board-absent { animation: none; }
 }
+
+/* ---------- Nyhedsticker i bunden af tavlen ---------- */
+.ticker-track {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: tickerScroll 35s linear infinite;
+}
+@keyframes tickerScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes breakingPulse {
+  0%, 100% { box-shadow: 0 0 6px 1px rgba(239, 68, 68, 0.4); }
+  50% { box-shadow: 0 0 22px 5px rgba(239, 68, 68, 0.9); }
+}
+.breaking-bar { animation: breakingPulse 1.3s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; }
+  .breaking-bar { animation: none; }
+}
+
+/* ==================== BLING: Kommandocentral-effekter ==================== */
+
+/* Levende aurora-baggrund bag hele tavlen */
+.board-scene { position: relative; isolation: isolate; }
+.board-scene::before {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  z-index: -2;
+  background:
+    radial-gradient(700px circle at 12% 15%, rgba(34, 211, 238, 0.10), transparent 60%),
+    radial-gradient(900px circle at 88% 85%, rgba(59, 130, 246, 0.09), transparent 60%),
+    radial-gradient(600px circle at 65% 5%, rgba(168, 85, 247, 0.06), transparent 60%);
+  animation: auroraDrift 26s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+.board-scene::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.035) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, black 30%, transparent 100%);
+  pointer-events: none;
+}
+@keyframes auroraDrift {
+  to { transform: translate(3%, -2%) scale(1.06); }
+}
+
+/* Glød paa store tal - farven foelger automatisk tekstfarven */
+.num-glow { text-shadow: 0 0 18px currentColor, 0 0 2px currentColor; }
+
+/* Gradient-titel */
+.title-gradient {
+  background: linear-gradient(100deg, #fff 20%, #a5f3fc 50%, #fff 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Bloed opbygning naar skaermen taender/genindlaeser */
+.rise { animation: riseIn 0.5s ease-out both; }
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Ticker: bloed fade i kanterne */
+.ticker-mask {
+  mask-image: linear-gradient(90deg, transparent, black 4%, black 96%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 4%, black 96%, transparent);
+}
+
+/* Breaking: loebende advarselsstriber i badge */
+.breaking-stripes {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.18) 0 10px,
+    transparent 10px 20px
+  );
+  background-color: rgb(220 38 38);
+  animation: stripesSlide 1s linear infinite;
+}
+@keyframes stripesSlide {
+  to { background-position: 28px 0; }
+}
+
+/* Omsaetningsbjaelke: glans der loeber hen over fyldet */
+.bar-shine { position: relative; overflow: hidden; }
+.bar-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: shineSweep 3.2s ease-in-out infinite;
+}
+@keyframes shineSweep {
+  0% { transform: translateX(-120%); }
+  55%, 100% { transform: translateX(120%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .board-scene::before, .rise, .breaking-stripes, .bar-shine::after { animation: none; }
+}
+
+/* ==================== Kanal-identiteter: Opslagstavlen & Ros ==================== */
+
+/* Opslagstavlen: holografisk cyan med scannende lys */
+.opslag-badge {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(120deg, #155e75, #0891b2 45%, #06b6d4);
+}
+.opslag-badge::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.30) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: shineSweep 4s ease-in-out infinite;
+}
+.opslag-bar {
+  border-color: rgb(34 211 238 / 0.45) !important;
+  animation: cyanBreathe 4s ease-in-out infinite;
+}
+@keyframes cyanBreathe {
+  0%, 100% { box-shadow: 0 0 8px rgba(34, 211, 238, 0.12); }
+  50% { box-shadow: 0 0 22px 2px rgba(34, 211, 238, 0.35); }
+}
+
+/* Ros & fejring: guldfest med glans og funklende stjerne */
+.ros-badge {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(120deg, #b45309, #f59e0b 45%, #fbbf24);
+  color: #451a03 !important;
+}
+.ros-badge::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.5) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: shineSweep 2.8s ease-in-out infinite;
+}
+.ros-badge::before {
+  content: "✦";
+  position: absolute;
+  top: 1px;
+  right: 5px;
+  font-size: 9px;
+  color: #fffbeb;
+  animation: twinkle 1.6s ease-in-out infinite;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.25) rotate(20deg); }
+}
+.ros-bar {
+  border-color: rgb(251 191 36 / 0.5) !important;
+  animation: goldBreathe 3.2s ease-in-out infinite;
+}
+@keyframes goldBreathe {
+  0%, 100% { box-shadow: 0 0 8px rgba(251, 191, 36, 0.15); }
+  50% { box-shadow: 0 0 24px 3px rgba(251, 191, 36, 0.45); }
+}
+.ros-text { text-shadow: 0 0 14px rgba(251, 191, 36, 0.55); }
+
+@media (prefers-reduced-motion: reduce) {
+  .opslag-badge::after, .ros-badge::after, .ros-badge::before,
+  .opslag-bar, .ros-bar { animation: none; }
+}
+
+/* ==================== Skarpere sidepanel: gloedende accent-linjer ==================== */
+.panel-accent { position: relative; overflow: hidden; }
+.panel-accent::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.accent-cyan::before { background: linear-gradient(90deg, #0891b2, #22d3ee, #67e8f9); box-shadow: 0 0 14px rgba(34, 211, 238, 0.8); }
+.accent-yellow::before { background: linear-gradient(90deg, #ca8a04, #eab308, #fde047); box-shadow: 0 0 14px rgba(234, 179, 8, 0.8); }
+.accent-green::before { background: linear-gradient(90deg, #16a34a, #22c55e, #86efac); box-shadow: 0 0 14px rgba(34, 197, 94, 0.8); }
+.accent-red::before { background: linear-gradient(90deg, #dc2626, #ef4444, #fca5a5); box-shadow: 0 0 14px rgba(239, 68, 68, 0.8); }
+.accent-sky::before { background: linear-gradient(90deg, #0284c7, #38bdf8, #7dd3fc); box-shadow: 0 0 14px rgba(56, 189, 248, 0.8); }

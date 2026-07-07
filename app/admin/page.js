@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { getWeekData } from "@/lib/db";
 import { mondayFromParam, toISODate, addDays, isoWeek, formatRange } from "@/lib/dates";
-import { taskCounts, absencePct, topThreeTeams, topThreeByRole, uniqueCases, returnGoalStats } from "@/lib/stats";
+import { taskCounts, absencePct, topThreeTeams, topThreeByRole, uniqueCases, returnGoalStats, fagCaseDays } from "@/lib/stats";
 import { getPendingCases } from "@/lib/review";
-import { getGoals } from "@/lib/goals";
-import { saveGoals } from "./actions";
+import { getGoals, getRevenue } from "@/lib/goals";
+import { getReturns } from "@/lib/returns";
+import { saveGoals, saveRevenue } from "./actions";
 import { monthInfo, MONTH_NAMES } from "@/lib/dates";
 import { db } from "@/lib/db";
 import TopThree from "@/components/TopThree";
@@ -19,18 +20,20 @@ export default async function AdminDashboard({ searchParams }) {
   const { teams, employees, tasks, absences } = await getWeekData(fromISO, toISO);
 
   const month = monthInfo(monday);
-  const [review, { data: monthTasks }, { data: monthAbsences }, goals] = await Promise.all([
+  const [review, { data: monthTasks }, monthReturns, { data: monthAbsences }, goals, revenue] = await Promise.all([
     getPendingCases(),
-    db().from("tasks").select("id,order_number,status,was_returned").gte("date", month.fromISO).lte("date", month.toISO),
-    db().from("absences").select("hours,reason").gte("date", month.fromISO).lte("date", month.toISO),
+    db().from("tasks").select("id,order_number,status").gte("date", month.fromISO).lte("date", month.toISO),
+    getReturns(month.fromISO, month.toISO),
+    db().from("absences").select("hours,reason,employee_id").gte("date", month.fromISO).lte("date", month.toISO),
     getGoals(),
+    getRevenue(),
   ]);
   const monthAbs = absencePct(monthAbsences || [], employees, month.workdays);
   const pending = review.yesterday;
-  const goal = returnGoalStats(monthTasks || [], goals.returnPct);
+  const goal = returnGoalStats(monthTasks || [], monthReturns, goals.returnPct);
   const monthName = MONTH_NAMES[monday.getMonth()];
 
-  const week = taskCounts(uniqueCases(tasks));
+  const week = taskCounts(fagCaseDays(tasks, employees));
   const absence = absencePct(absences, employees, 5);
   const top3Teams = topThreeTeams(tasks, teams);
   const top3Electricians = topThreeByRole(tasks, employees, "Elektriker");
@@ -38,7 +41,7 @@ export default async function AdminDashboard({ searchParams }) {
   const stats = [
     { label: "Planlagte sager", value: week.total, sub: "alle sager i ugen" },
     { label: "Lukkede sager", value: week.counts.lukket, sub: `${week.completion}% færdiggørelse` },
-    { label: "Tilbage-sager", value: week.counts.tilbage, sub: `${week.returnPct}% tilbagekørsel` },
+    { label: "Tilbage-sager", value: week.counts.tilbage, sub: "står aktuelt til genbesøg" },
     {
       label: `Tilbagekørsel · ${monthName}`,
       value: `${goal.pct}%`,
@@ -115,6 +118,26 @@ export default async function AdminDashboard({ searchParams }) {
               Hold
             </Link>
           </div>
+          <form action={saveRevenue} className="mt-4 border-t border-slate-100 pt-3">
+            <div className="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-2">
+              Omsætning · {monthName} (vises som bjælke på tavlen)
+            </div>
+            <div className="flex items-end gap-2">
+              <div>
+                <label className="label" htmlFor="revenue_goal">Månedens mål (kr)</label>
+                <input id="revenue_goal" name="revenue_goal" type="text" inputMode="numeric"
+                  defaultValue={revenue.goal ? revenue.goal.toLocaleString("da-DK") : ""}
+                  placeholder="fx 2.000.000" className="input w-40" />
+              </div>
+              <div>
+                <label className="label" htmlFor="revenue_current">Omsætning indtil nu (kr)</label>
+                <input id="revenue_current" name="revenue_current" type="text" inputMode="numeric"
+                  defaultValue={revenue.current ? revenue.current.toLocaleString("da-DK") : ""}
+                  placeholder="opdatér fx hver fredag" className="input w-44" />
+              </div>
+              <button className="btn-ghost">Gem omsætning</button>
+            </div>
+          </form>
           <form action={saveGoals} className="mt-4 border-t border-slate-100 pt-3">
             <div className="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-2">
               Mål (vises på tavlen)

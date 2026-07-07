@@ -95,13 +95,13 @@ export default async function SyncPage() {
             hvem der er på hvilke sager og hvornår. Tavlen henter det automatisk hvert 5. minut.
           </p>
           <p>
-            <strong className="text-slate-700">Du styrer kun to ting her:</strong> hvilket hold
-            hver medarbejder er på (sættes én gang under Medarbejdere) og opgavernes status
-            (farveprikkerne i kalenderen). Status røres aldrig af synkroniseringen.
+            <strong className="text-slate-700">Ordrestyring er den eneste sandhed:</strong>{" "}
+            kalender og status spejles direkte derfra ved hver synkronisering (flyttede og slettede aftaler forsvinder også fra tavlen) – også hvis en fejl
+            rettes, genberegnes al statistik automatisk. Her styrer I kun holdene (sættes én
+            gang under Medarbejdere).
           </p>
           <p>
-            Ordrestyrings sagsstatus styrer også tavlen: &quot;klar til fakturering&quot; sætter
-            sagen til Lukket, og &quot;genbesøg&quot; sætter den til Tilbage (tæller i statistikken).
+            Sagens status oversættes PR. FAG: &quot;El færdig&quot; lukker kun elektrikerens kort, &quot;Solceller færdig&quot; kun montørernes, &quot;Kræver genbesøg EL/Solceller&quot; rammer kun det fag, og &quot;Klar til tilmelding/fakturering&quot; lukker begge. Ingen straffes for den andens arbejde.
             Nye medarbejdere fra Ordrestyring lander uden hold – tildel dem et hold under
             Medarbejdere, så tæller de med i Top 3. Kalender-aftaler med ord som ferie, sygdom
             og fri registreres automatisk som fravær.

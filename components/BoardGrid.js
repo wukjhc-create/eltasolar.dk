@@ -51,11 +51,11 @@ function BoardChip({ task }) {
     task.status === "lukket" ? "board-lukket" : task.status === "tilbage" ? "board-tilbage" : "";
   const text = [task.order_number, task.title].filter(Boolean).join(" ") || "Opgave";
   return (
-    <div className={`rounded border px-1.5 py-[3px] leading-tight text-[11.5px] ${s.chip} ${fx}`}>
+    <div className={`rounded border px-1.5 py-[3px] leading-tight text-[11.5px] ${s.chipDark || s.chip} ${fx}`}>
       <div className="truncate font-semibold">
-        {task.status === "lukket" ? "✓ " : ""}
+        {task.status === "lukket" ? "✓ " : task.status === "tilbage" ? "↩ " : ""}
         {text}
-        {task.status === "tilbage" && task.return_reason ? ` · ↩ ${task.return_reason}` : ""}
+        {task.status === "tilbage" && task.return_reason ? ` · ${task.return_reason}` : ""}
       </div>
     </div>
   );
@@ -350,7 +350,13 @@ function AdminGroup({ group, days, tasksForEmp, absenceFor, weekParam, t }) {
                       >
                         <AdminChip task={task} />
                       </Link>
-                      <QuickStatus task={task} />
+                      {task.os_identifier ? (
+                        <div className="px-0.5 pt-0.5 text-[10px] text-slate-400">
+                          🔒 status styres af Ordrestyring
+                        </div>
+                      ) : (
+                        <QuickStatus task={task} />
+                      )}
                     </div>
                   ))}
                   <Link

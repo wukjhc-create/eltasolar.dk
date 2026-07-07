@@ -1,10 +1,11 @@
-const MEDALS = ["1.", "2.", "3."];
+const MEDALS = ["🥇", "🥈", "🥉"];
+const MEDAL_COLORS = ["#fbbf24", "#cbd5e1", "#d97706"];
 
 // Generisk Top 3: entries = [{ key, label, color, count }]
-export default function TopThree({ title, entries, unit = "lukkede sager", dark = false }) {
+export default function TopThree({ title, entries, unit = "sagsdage", unitSingular = "sagsdag", dark = false }) {
   return (
     <div>
-      <div className={`text-xs font-semibold uppercase tracking-wide mb-2 ${dark ? "text-cyan-400/80" : "text-slate-500"}`}>
+      <div className={`text-xs font-semibold uppercase tracking-wide mb-2 ${dark ? "text-cyan-300 !text-[13px] font-extrabold tracking-widest" : "text-slate-500"}`}>
         {title}
       </div>
       {entries.length === 0 ? (
@@ -15,7 +16,10 @@ export default function TopThree({ title, entries, unit = "lukkede sager", dark 
         <ol className="space-y-1.5">
           {entries.map((e, i) => (
             <li key={e.key} className="flex items-center gap-2 text-sm">
-              <span className={`w-5 font-display font-bold ${dark ? "text-slate-600" : "text-slate-400"}`}>
+              <span
+                className="w-6 font-display text-base font-bold"
+                style={dark ? { color: MEDAL_COLORS[i], textShadow: `0 0 10px ${MEDAL_COLORS[i]}88` } : { color: MEDAL_COLORS[i] }}
+              >
                 {MEDALS[i]}
               </span>
               <span
@@ -26,7 +30,7 @@ export default function TopThree({ title, entries, unit = "lukkede sager", dark 
                 {e.label}
               </span>
               <span className={`ml-auto tabular-nums ${dark ? "text-slate-400" : "text-slate-600"}`}>
-                {e.count} {e.count === 1 ? unit.replace("sager", "sag").replace("lukkede", "lukket") : unit}
+                {e.count} {e.count === 1 ? unitSingular : unit}
               </span>
             </li>
           ))}

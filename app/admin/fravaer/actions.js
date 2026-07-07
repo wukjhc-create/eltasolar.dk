@@ -37,7 +37,7 @@ export async function toggleAbsence(formData) {
       employee_id: employeeId,
       date,
       hours: Number(emp?.daily_hours || 7.5),
-      reason: "Fravær",
+      reason: "Sygdom",
     });
   }
   await refresh();

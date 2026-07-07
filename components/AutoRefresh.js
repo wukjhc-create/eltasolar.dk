@@ -1,38 +1,55 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
 
-// Sparer datatrafik: poller kun en lille dataversion hvert X sekund og
-// genindlaeser foerst tavlen, naar noget faktisk har aendret sig.
-// Som sikkerhedsnet genindlaeses der altid mindst hvert 10. minut.
-export default function AutoRefresh({ seconds = 15, fullEverySeconds = 600 }) {
-  const router = useRouter();
+// Hurtigt lag: opdager aendringer inden for ~15 sek. og genindlaeser hele siden.
+// Haerdet mod browser-throttling: bruger baade interval, synligheds-skift og
+// et tidsstempel-tjek, saa en "sovende" fane indhenter det forsoemte, naar den vaagner.
+// Bundlinjen sikres uanset af HTTP Refresh-headeren (genindlaesning hvert 5. min).
+export default function AutoRefresh({ seconds = 15, fullEverySeconds = 540 }) {
   const lastVersion = useRef(null);
-  const lastFull = useRef(Date.now());
+  const loadedAt = useRef(Date.now());
+  const checking = useRef(false);
 
   useEffect(() => {
-    const tick = async () => {
+    const check = async () => {
+      if (checking.current) return;
+      checking.current = true;
       try {
-        const res = await fetch("/api/version", { cache: "no-store" });
+        // Absolut sikkerhedsnet i JS-laget (foer HTTP-headerens 5 min.)
+        if (Date.now() - loadedAt.current > fullEverySeconds * 1000) {
+          window.location.reload();
+          return;
+        }
+        const res = await fetch(`/api/version?t=${Date.now()}`, { cache: "no-store" });
         const { v } = await res.json();
         if (lastVersion.current === null) {
           lastVersion.current = v;
         } else if (v !== lastVersion.current) {
-          lastVersion.current = v;
-          lastFull.current = Date.now();
-          router.refresh();
-        } else if (Date.now() - lastFull.current > fullEverySeconds * 1000) {
-          lastFull.current = Date.now();
-          router.refresh();
+          window.location.reload();
+          return;
         }
       } catch {
         // netvaerksfejl: proev igen naeste gang
+      } finally {
+        checking.current = false;
       }
     };
-    const id = setInterval(tick, seconds * 1000);
-    return () => clearInterval(id);
-  }, [router, seconds, fullEverySeconds]);
+
+    const id = setInterval(check, seconds * 1000);
+    const onVisible = () => {
+      if (document.visibilityState === "visible") check();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    window.addEventListener("focus", onVisible);
+    check();
+
+    return () => {
+      clearInterval(id);
+      document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("focus", onVisible);
+    };
+  }, [seconds, fullEverySeconds]);
 
   return null;
 }

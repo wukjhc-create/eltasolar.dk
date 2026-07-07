@@ -15,6 +15,8 @@ const NAV = [
   { href: "/admin/medarbejdere", label: "Medarbejdere" },
   { href: "/admin/hold", label: "Hold" },
   { href: "/admin/fravaer", label: "Fravær" },
+  { href: "/admin/tilbage", label: "Tilbagekørsler" },
+  { href: "/admin/nyheder", label: "Nyheder" },
   { href: "/admin/synk", label: "Synk" },
 ];
 
