@@ -10,7 +10,7 @@ export default function TopThree({ title, entries, unit = "sagsdage", unitSingul
       </div>
       {entries.length === 0 ? (
         <p className={`text-sm ${dark ? "text-slate-500" : "text-slate-400"}`}>
-          Ingen lukkede sager endnu
+          Ingen lukkede sagsdage endnu
         </p>
       ) : (
         <ol className="space-y-1.5">

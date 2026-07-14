@@ -21,25 +21,25 @@ const THEMES = {
     absentChip: "border-dashed border-slate-300 text-slate-400",
   },
   dark: {
-    wrap: "overflow-hidden rounded-xl border border-slate-800 bg-slate-900/60",
-    thead: "bg-slate-950 text-white border-b-2 border-cyan-500/60",
-    theadDate: "text-slate-500",
-    groupRow: "bg-slate-800/50 border-t border-slate-800",
-    groupText: "text-slate-300",
-    row: "border-t border-slate-800/70",
-    cellBorder: "border-l border-slate-800/70",
-    name: "text-slate-100",
-    role: "text-slate-500",
+    wrap: "overflow-hidden rounded-2xl border border-[#E7E1D2] bg-white",
+    thead: "bg-[#26215C] text-[#FAF6EC]",
+    theadDate: "text-[#AFA9EC]",
+    groupRow: "bg-[#FAF6EC] border-t border-[#EDE7D8]",
+    groupText: "text-[#26215C]",
+    row: "border-t border-[#F1ECDE]",
+    cellBorder: "border-l border-[#F1ECDE]",
+    name: "text-[#26215C]",
+    role: "text-[#888780]",
     absentCell: "",
-    absentChip: "border-dashed border-red-600/60 text-red-400",
+    absentChip: "border-dashed border-[#B4B2A9] text-[#5F5E5A]",
   },
 };
 
 // Fravaerskategorier paa tavlen: syg = roed alarm, ferie = rolig blaa, andet = graa
 const ABS_STYLE = {
-  syg: "board-absent rounded border border-dashed border-red-600/60 px-1.5 py-[2px] text-[11px] text-red-400",
-  ferie: "rounded border border-dashed border-sky-700/70 bg-sky-950/40 px-1.5 py-[2px] text-[11px] text-sky-300/90",
-  andet: "rounded border border-dashed border-slate-600/70 px-1.5 py-[2px] text-[11px] text-slate-400",
+  syg: "board-absent rounded-lg border border-dashed border-[#E24B4A] bg-[#FCEBEB] px-1.5 py-[2px] text-[11px] font-semibold text-[#791F1F]",
+  ferie: "rounded-lg border border-dashed border-[#BA7517] bg-[#FAEEDA] px-1.5 py-[2px] text-[11px] font-semibold text-[#854F0B]",
+  andet: "rounded-lg border border-dashed border-[#B4B2A9] bg-[#F1EFE8] px-1.5 py-[2px] text-[11px] text-[#5F5E5A]",
 };
 const ABS_ICON = { syg: "⚠", ferie: "🏖", andet: "•" };
 const ABS_WORD = { syg: "syg", ferie: "ferie", andet: "fravær" };
@@ -48,12 +48,12 @@ const ABS_WORD = { syg: "syg", ferie: "ferie", andet: "fravær" };
 function BoardChip({ task }) {
   const s = STATUSES[task.status] || STATUSES.planlagt;
   const fx =
-    task.status === "lukket" ? "board-lukket" : task.status === "tilbage" ? "board-tilbage" : "";
+    task.status === "lukket" ? "sun-lukket" : task.status === "tilbage" ? "sun-tilbage" : "";
   const text = [task.order_number, task.title].filter(Boolean).join(" ") || "Opgave";
   return (
-    <div className={`rounded border px-1.5 py-[3px] leading-tight text-[11.5px] ${s.chipDark || s.chip} ${fx}`}>
+    <div className={`rounded-lg px-2 py-[3px] leading-tight text-[11.5px] ${s.chipSun || s.chip} ${fx}`}>
       <div className="truncate font-semibold">
-        {task.status === "lukket" ? "✓ " : task.status === "tilbage" ? "↩ " : ""}
+        {task.status === "lukket" ? "☀ " : task.status === "tilbage" ? "↩ " : ""}
         {text}
         {task.status === "tilbage" && task.return_reason ? ` · ${task.return_reason}` : ""}
       </div>
@@ -212,7 +212,7 @@ function BoardTeamRow({ group, days, tasksForEmp, absenceFor, t }) {
         <div className="flex items-center gap-2">
           <span
             className="h-2.5 w-2.5 rounded-sm shrink-0"
-            style={{ backgroundColor: color, boxShadow: `0 0 8px ${color}88` }}
+            style={{ backgroundColor: color }}
           />
           <span className={`font-display text-sm font-bold uppercase tracking-wide truncate ${t.name}`}>
             {group.team.name}
@@ -243,7 +243,7 @@ function BoardTeamRow({ group, days, tasksForEmp, absenceFor, t }) {
                 <BoardChip key={task.id} task={task} />
               ))}
               {cellTasks.length > 4 && (
-                <div className="px-1.5 text-[11px] font-semibold text-slate-500">
+                <div className="px-1.5 text-[11px] font-semibold text-[#888780]">
                   +{cellTasks.length - 4} flere
                 </div>
               )}
@@ -265,7 +265,7 @@ function BoardRoleGroup({ group, days, tasksForEmp, absenceFor, t }) {
           <div className="flex items-center gap-2 px-3 py-1">
             <span
               className="h-3 w-3 rounded-sm"
-              style={{ backgroundColor: color, boxShadow: `0 0 8px ${color}66` }}
+              style={{ backgroundColor: color }}
             />
             <span className={`font-display text-xs font-bold uppercase tracking-widest ${t.groupText}`}>
               {group.team.name}
@@ -295,7 +295,7 @@ function BoardRoleGroup({ group, days, tasksForEmp, absenceFor, t }) {
                     <BoardChip key={task.id} task={task} />
                   ))}
                   {cellTasks.length > 4 && (
-                    <div className="px-1.5 text-[11px] font-semibold text-slate-500">
+                    <div className="px-1.5 text-[11px] font-semibold text-[#888780]">
                       +{cellTasks.length - 4} flere
                     </div>
                   )}

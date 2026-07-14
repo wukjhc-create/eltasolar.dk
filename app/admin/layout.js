@@ -17,6 +17,7 @@ const NAV = [
   { href: "/admin/fravaer", label: "Fravær" },
   { href: "/admin/tilbage", label: "Tilbagekørsler" },
   { href: "/admin/nyheder", label: "Nyheder" },
+  { href: "/admin/flaade", label: "Flåden" },
   { href: "/admin/synk", label: "Synk" },
 ];
 

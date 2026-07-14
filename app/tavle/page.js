@@ -13,6 +13,9 @@ import { taskCounts, absencePct, topThreeTeams, topThreeByRole, uniqueCases, ret
 import { getGoals, getRevenue } from "@/lib/goals";
 import { getReturns } from "@/lib/returns";
 import { isNewsVisible, nowInCopenhagen, NEWS_CATEGORIES, CATEGORY_ORDER } from "@/lib/news";
+import { fetchGpsSmart } from "@/lib/ordrestyring";
+import { latestByCar, formatSince } from "@/lib/fleet";
+import FleetMap from "@/components/FleetMap";
 import BoardGrid from "@/components/BoardGrid";
 import TopThree from "@/components/TopThree";
 import AutoRefresh from "@/components/AutoRefresh";
@@ -30,7 +33,7 @@ export default async function BoardPage({ searchParams }) {
   const month = monthInfo(monday);
   const [{ data: monthAbsences }, { data: monthTasks }, monthReturns, weekReturns] = await Promise.all([
     db().from("absences").select("hours,reason,employee_id").gte("date", month.fromISO).lte("date", month.toISO),
-    db().from("tasks").select("id,order_number,status").gte("date", month.fromISO).lte("date", month.toISO),
+    db().from("tasks").select("id,order_number,status,team_id,employee_id,date").gte("date", month.fromISO).lte("date", month.toISO),
     getReturns(month.fromISO, month.toISO),
     getReturns(fromISO, toISO),
   ]);
@@ -41,6 +44,21 @@ export default async function BoardPage({ searchParams }) {
   ]);
   const nowCph = nowInCopenhagen();
   const news = (newsData || []).filter((n) => isNewsVisible(n, nowCph));
+
+  // Flaaden vises doegnet rundt - kun med Bil-numre ("Bil 1" osv. i OS Vehicle)
+  let fleetCars = [];
+  let fleetTotal = 0;
+  let fleetError = null;
+  {
+    const numbers = [...new Set(tasks.map((t) => t.order_number).filter(Boolean))];
+    const gps = await fetchGpsSmart(numbers);
+    if (gps.error) fleetError = gps.error;
+    else {
+      const all = latestByCar(gps.entries);
+      fleetTotal = all.length;
+      fleetCars = all.filter((c) => c.bilNo != null);
+    }
+  }
   const goal = returnGoalStats(monthTasks || [], monthReturns, goals.returnPct);
   const weekReturn = returnGoalStats(tasks, weekReturns, goals.returnPct);
 
@@ -49,39 +67,45 @@ export default async function BoardPage({ searchParams }) {
   const monthAbsence = absencePct(monthAbsences || [], employees, month.workdays);
   const top3Teams = topThreeTeams(tasks, teams);
   const top3Electricians = topThreeByRole(tasks, employees, "Elektriker");
+  const top3TeamsMonth = topThreeTeams(monthTasks || [], teams);
+  const top3ElectriciansMonth = topThreeByRole(monthTasks || [], employees, "Elektriker");
   const monthName = MONTH_NAMES[monday.getMonth()];
+  const monthLabel = monthName[0].toUpperCase() + monthName.slice(1);
 
   const kpis = [
-    { label: "Planlagt", value: week.counts.planlagt, accent: "text-slate-300", sub: "sagsdage" },
-    { label: "I gang", value: week.counts.i_gang, accent: "text-blue-400" },
-    { label: "Lukket", value: week.counts.lukket, accent: "text-green-400" },
-    { label: "Tilbage", value: week.counts.tilbage, accent: "text-red-400" },
+    { label: "Planlagt", value: week.counts.planlagt, accent: "text-[#26215C]", sub: "sagsdage" },
+    { label: "I gang", value: week.counts.i_gang, accent: "text-[#185FA5]" },
+    { label: "Lukket", value: week.counts.lukket, accent: "text-[#3B6D11]" },
+    { label: "Tilbage", value: week.counts.tilbage, accent: "text-[#A32D2D]" },
     { label: "Færdiggørelse", value: `${week.completion}%`, accent: "text-cyan-300" },
-    { label: "Tilbagekørsel", value: `${weekReturn.pct}%`, accent: weekReturn.ok ? "text-slate-200" : "text-red-400" },
-    { label: "Sygefravær (uge)", value: `${weekAbsence.syg.pct}%`, accent: weekAbsence.syg.pct > goals.sickPct ? "text-red-400" : "text-slate-200" },
+    { label: "Tilbagekørsel", value: `${weekReturn.pct}%`, accent: weekReturn.ok ? "text-[#26215C]" : "text-[#A32D2D]" },
+    { label: "Sygefravær (uge)", value: `${weekAbsence.syg.pct}%`, accent: weekAbsence.syg.pct > goals.sickPct ? "text-[#A32D2D]" : "text-[#26215C]" },
   ];
 
-  const panelCard = "rise panel-accent rounded-xl border border-slate-700/80 bg-slate-900/70 p-4 pt-5";
+  const panelCard = "rise rounded-2xl border border-[#E7E1D2] bg-white p-4";
 
   return (
-    <main className="board-scene min-h-screen bg-[#070b14] p-6 text-slate-100">
+    <main className="min-h-screen bg-[#FAF6EC] p-6 text-[#26215C]">
       <AutoRefresh seconds={10} />
 
       {/* Toplinje */}
       <header className="flex items-end justify-between gap-6 mb-5">
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="title-gradient font-display text-4xl font-extrabold tracking-tight">
+            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#EF9F27] text-2xl">
+              ☀️
+            </span>
+            <h1 className="font-display text-4xl font-extrabold tracking-tight text-[#26215C]">
               Uge {isoWeek(monday)}
             </h1>
-            <span className="flex items-center gap-1.5 rounded-full border border-green-500/30 bg-green-500/10 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-green-400">
+            <span className="flex items-center gap-1.5 rounded-full border border-transparent bg-[#EAF3DE] px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-[#3B6D11]">
               <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-60" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#639922] opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#639922]" />
               </span>
               Live
             </span>
-            <span className="text-xs text-slate-500">
+            <span className="text-xs text-[#888780]">
               Opdateret kl.{" "}
               {new Date().toLocaleTimeString("da-DK", {
                 timeZone: "Europe/Copenhagen",
@@ -96,7 +120,7 @@ export default async function BoardPage({ searchParams }) {
           {kpis.map((k, i) => (
             <div
               key={k.label}
-              className="rise rounded-xl border border-slate-800 bg-slate-900/60 px-4 py-2.5 text-center min-w-[6.5rem]"
+              className="rise rounded-xl border border-[#E7E1D2] bg-white px-4 py-2.5 text-center min-w-[6.5rem]"
               style={{ animationDelay: `${i * 60}ms` }}
             >
               <div className={`num-glow font-display text-2xl font-extrabold tabular-nums ${k.accent}`}>
@@ -111,7 +135,8 @@ export default async function BoardPage({ searchParams }) {
       </header>
 
       <div className="grid grid-cols-[1fr_18rem] gap-5 items-start">
-        {/* Ugekalender */}
+        {/* Ugekalender + nyhedskanaler i venstre kolonne */}
+        <div className="min-w-0">
         <BoardGrid
           teams={teams}
           employees={employees}
@@ -121,74 +146,139 @@ export default async function BoardPage({ searchParams }) {
           mode="board"
         />
 
+      {/* Tre nyhedskanaler - hver bjaelke vises kun naar den har noget i luften */}
+      {CATEGORY_ORDER.map((catKey) => {
+        const cat = NEWS_CATEGORIES[catKey];
+        const catNews = news.filter((n) => (n.category || "opslag") === catKey);
+        if (catNews.length === 0) return null;
+        const items = catNews.map((n) => (
+          <span key={n.id} className="mx-8 inline-flex items-center gap-2">
+            <span className={cat.text}>{n.message}</span>
+            <span className="text-[#D3D1C7]">•</span>
+          </span>
+        ));
+        return (
+          <footer
+            key={catKey}
+            className={`mt-2 overflow-hidden rounded-xl border bg-white ${cat.bar}`}
+          >
+            <div className="flex items-stretch">
+              <div
+                className={`flex w-56 shrink-0 items-center justify-center px-3 font-display text-base font-extrabold uppercase tracking-widest ${cat.badge}`}
+              >
+                {cat.icon} {cat.label}
+              </div>
+              <div className="ticker-mask flex-1 overflow-hidden py-2.5 text-xl font-semibold">
+                <div className="ticker-track">
+                  <span>{items}</span>
+                  <span aria-hidden="true">{items}</span>
+                </div>
+              </div>
+            </div>
+          </footer>
+        );
+      })}
+
+        {/* Flaaden: sidst kendte position pr. bil (kun arbejdstid, kun Bil-numre) */}
+        {fleetCars.length > 0 ? (
+          <div className="rise mt-3 overflow-hidden rounded-2xl border border-[#E7E1D2] bg-white p-3">
+            <div className="mb-2 flex items-baseline justify-between">
+              <span className="text-[13px] font-extrabold uppercase tracking-widest text-[#26215C]">
+                🚗 Flåden
+              </span>
+              <span className="text-xs text-[#888780]">
+                {fleetCars.filter((c) => c.moving).length} i bevægelse ·{" "}
+                {fleetCars.filter((c) => !c.moving).length} holder · sidst kendte position
+              </span>
+            </div>
+            <FleetMap cars={fleetCars} height={340} />
+          </div>
+        ) : (
+          <div className="mt-3 px-1 text-xs text-[#888780]">
+            🚗 Flåden:{" "}
+            {fleetError
+              ? "kunne ikke hente GPS-data – se detaljer under Admin → Flåden"
+              : fleetTotal > 0
+                ? `${fleetTotal} biler fundet – omdøb dem til "Bil 1"–"Bil ${fleetTotal}" i OS Vehicle, så vises de på kortet her`
+                : "ingen GPS-ture fundet endnu – tjek at OS Vehicle-enhederne er aktive"}
+          </div>
+        )}
+        </div>
+
         {/* Sidepanel */}
         <aside className="space-y-4">
-          <div className={`${panelCard} accent-cyan`}>
-            <TopThree title="Top 3 montørhold – denne uge" entries={top3Teams} dark />
+          <div className={panelCard}>
+            <TopThree title="Top 3 montørhold – denne uge" entries={top3Teams} />
+            <div className="mt-3 border-t border-[#EDE7D8] pt-3">
+              <TopThree title={`Montørhold – ${monthLabel}`} entries={top3TeamsMonth} />
+            </div>
           </div>
-          <div className={`${panelCard} accent-yellow`}>
-            <TopThree title="Top 3 elektrikere – denne uge" entries={top3Electricians} dark />
+          <div className={panelCard}>
+            <TopThree title="Top 3 elektrikere – denne uge" entries={top3Electricians} />
+            <div className="mt-3 border-t border-[#EDE7D8] pt-3">
+              <TopThree title={`Elektrikere – ${monthLabel}`} entries={top3ElectriciansMonth} />
+            </div>
           </div>
-          <div className={`${panelCard} ${goal.ok && monthAbsence.syg.pct <= goals.sickPct ? "accent-green" : "accent-red border-red-500/40"}`}>
-            <div className="text-[13px] font-extrabold uppercase tracking-widest text-cyan-300 mb-2">
-              Tilbagekørsel <span className="text-slate-400 normal-case font-semibold">(mål ≤ {goal.goalPct}%)</span>
+          <div className="rise rounded-2xl bg-[#26215C] p-4">
+            <div className="text-[13px] font-extrabold uppercase tracking-widest text-[#CECBF6] mb-2">
+              Tilbagekørsel <span className="text-[#8F8AC9] normal-case font-semibold">(mål ≤ {goal.goalPct}%)</span>
             </div>
             <div className="flex items-baseline justify-between text-sm">
-              <span className="text-slate-400">Denne uge</span>
-              <span className={`num-glow font-display text-2xl font-extrabold tabular-nums ${weekReturn.ok ? "text-green-400" : "text-red-400"}`}>
+              <span className="text-[#AFA9EC]">Denne uge</span>
+              <span className={`font-display text-2xl font-extrabold tabular-nums ${weekReturn.ok ? "text-[#9FE1CB]" : "text-[#F09595]"}`}>
                 {weekReturn.pct}%
               </span>
             </div>
             <div className="flex items-baseline justify-between text-sm mt-1">
-              <span className="text-slate-400">{monthName[0].toUpperCase() + monthName.slice(1)}</span>
-              <span className={`num-glow font-display text-2xl font-extrabold tabular-nums ${goal.ok ? "text-green-400" : "text-red-400"}`}>
+              <span className="text-[#AFA9EC]">{monthName[0].toUpperCase() + monthName.slice(1)}</span>
+              <span className={`font-display text-2xl font-extrabold tabular-nums ${goal.ok ? "text-[#9FE1CB]" : "text-[#F09595]"}`}>
                 {goal.pct}%
               </span>
             </div>
-            <div className="text-xs text-slate-500 mt-0.5">
+            <div className="text-xs text-[#8F8AC9] mt-0.5">
               {goal.returned} tilbagekørsler i {monthName} ({goal.total} sager) – tælles den dag de registreres
             </div>
 
-            <div className="mt-3 border-t border-slate-800 pt-2">
-              <div className="text-[13px] font-extrabold uppercase tracking-widest text-cyan-300 mb-2">
-                Sygefravær <span className="text-slate-400 normal-case font-semibold">(mål ≤ {goals.sickPct}%)</span>
+            <div className="mt-3 border-t border-[#3C3489] pt-2">
+              <div className="text-[13px] font-extrabold uppercase tracking-widest text-[#CECBF6] mb-2">
+                Sygefravær <span className="text-[#8F8AC9] normal-case font-semibold">(mål ≤ {goals.sickPct}%)</span>
               </div>
               <div className="flex items-baseline justify-between text-sm">
-                <span className="text-slate-400">Denne uge</span>
-                <span className={`num-glow font-display text-2xl font-extrabold tabular-nums ${weekAbsence.syg.pct <= goals.sickPct ? "text-green-400" : "text-red-400"}`}>
+                <span className="text-[#AFA9EC]">Denne uge</span>
+                <span className={`font-display text-2xl font-extrabold tabular-nums ${weekAbsence.syg.pct <= goals.sickPct ? "text-[#9FE1CB]" : "text-[#F09595]"}`}>
                   {weekAbsence.syg.pct}%
                 </span>
               </div>
               <div className="flex items-baseline justify-between text-sm mt-1">
-                <span className="text-slate-400">{monthName[0].toUpperCase() + monthName.slice(1)}</span>
-                <span className={`num-glow font-display text-2xl font-extrabold tabular-nums ${monthAbsence.syg.pct <= goals.sickPct ? "text-green-400" : "text-red-400"}`}>
+                <span className="text-[#AFA9EC]">{monthName[0].toUpperCase() + monthName.slice(1)}</span>
+                <span className={`font-display text-2xl font-extrabold tabular-nums ${monthAbsence.syg.pct <= goals.sickPct ? "text-[#9FE1CB]" : "text-[#F09595]"}`}>
                   {monthAbsence.syg.pct}%
                 </span>
               </div>
-              <div className="text-xs text-slate-500 mt-0.5">
+              <div className="text-xs text-[#8F8AC9] mt-0.5">
                 {monthAbsence.syg.hours} sygetimer af {monthAbsence.netPossible} mulige (efter ferie)
               </div>
             </div>
           </div>
-          <div className={`${panelCard} accent-sky`}>
-            <div className="text-[13px] font-extrabold uppercase tracking-widest text-sky-300 mb-2">
+          <div className={panelCard}>
+            <div className="text-[13px] font-extrabold uppercase tracking-widest text-[#185FA5] mb-2">
               🏖 Ferie / fri
             </div>
             <div className="flex items-baseline justify-between text-sm">
-              <span className="text-slate-400">Denne uge</span>
-              <span className="num-glow font-display text-2xl font-extrabold tabular-nums text-sky-300">
+              <span className="text-[#5F5E5A]">Denne uge</span>
+              <span className="font-display text-2xl font-extrabold tabular-nums text-[#185FA5]">
                 {weekAbsence.ferie.pct}%
               </span>
             </div>
             <div className="flex items-baseline justify-between text-sm mt-1">
-              <span className="text-slate-400">
+              <span className="text-[#5F5E5A]">
                 {monthName[0].toUpperCase() + monthName.slice(1)}
               </span>
-              <span className="num-glow font-display text-2xl font-extrabold tabular-nums text-sky-300">
+              <span className="font-display text-2xl font-extrabold tabular-nums text-[#185FA5]">
                 {monthAbsence.ferie.pct}%
               </span>
             </div>
-            <p className="mt-2 text-[10px] leading-snug text-slate-600">
+            <p className="mt-2 text-[10px] leading-snug text-[#888780]">
               Andel af timerne der er planlagt ferie/fri. Sygefravær (KPI øverst og Mål-kortet)
               måles af timerne efter ferie-fradrag.
             </p>
@@ -207,41 +297,41 @@ export default async function BoardPage({ searchParams }) {
         const done = rawPct >= 100;
         const fmt = (n) => Math.round(n).toLocaleString("da-DK");
         return (
-          <div className="mt-5 rounded-xl border border-slate-800 bg-slate-900/60 px-5 py-4">
+          <div className="mt-4 rounded-2xl border border-[#E7E1D2] bg-white px-5 py-4">
             <div className="mb-2 flex items-baseline justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wide text-cyan-400/80">
+              <span className="text-[13px] font-extrabold uppercase tracking-widest text-[#26215C]">
                 Omsætning · {monthName[0].toUpperCase() + monthName.slice(1)}
               </span>
-              <span className="text-sm text-slate-300">
-                <span className={`num-glow font-display text-2xl font-extrabold tabular-nums ${done ? "text-green-400" : ahead ? "text-green-300" : "text-amber-400"}`}>
+              <span className="text-sm text-[#5F5E5A]">
+                <span className={`num-glow font-display text-2xl font-extrabold tabular-nums ${done ? "text-[#3B6D11]" : ahead ? "text-[#639922]" : "text-[#BA7517]"}`}>
                   {fmt(revenue.current)} kr
                 </span>
-                <span className="text-slate-500"> af {fmt(revenue.goal)} kr · </span>
-                <span className={`font-bold tabular-nums ${done ? "text-green-400" : ahead ? "text-green-300" : "text-amber-400"}`}>
+                <span className="text-[#888780]"> af {fmt(revenue.goal)} kr · </span>
+                <span className={`font-bold tabular-nums ${done ? "text-[#3B6D11]" : ahead ? "text-[#639922]" : "text-[#BA7517]"}`}>
                   {rawPct}%
                 </span>
                 {done && " 🎉 Mål nået!"}
               </span>
             </div>
-            <div className="relative h-5 overflow-hidden rounded-full border border-slate-700 bg-slate-800">
+            <div className="relative h-5 overflow-hidden rounded-full border border-transparent bg-[#F1EFE8]">
               <div
                 className={`bar-shine h-full rounded-full transition-all ${
                   done
-                    ? "bg-gradient-to-r from-green-500 to-emerald-400"
+                    ? "bg-[#97C459]"
                     : ahead
-                      ? "bg-gradient-to-r from-cyan-500 to-green-400"
-                      : "bg-gradient-to-r from-amber-500 to-orange-400"
+                      ? "bg-[#EF9F27]"
+                      : "bg-[#E24B4A]"
                 }`}
-                style={{ width: `${pct}%`, boxShadow: done ? "0 0 18px rgba(34,197,94,0.7)" : "0 0 12px rgba(34,211,238,0.35)" }}
+                style={{ width: `${pct}%`, boxShadow: "none" }}
               />
               {/* Markoer: her burde vi vaere i dag */}
               <div
-                className="absolute top-0 h-full w-0.5 bg-white/70"
+                className="absolute top-0 h-full w-0.5 bg-[#26215C]"
                 style={{ left: `${expectedPct}%` }}
                 title="Forventet i dag"
               />
             </div>
-            <div className="relative mt-1 h-4 text-[10px] text-slate-500">
+            <div className="relative mt-1 h-4 text-[10px] text-[#888780]">
               <span className="absolute -translate-x-1/2" style={{ left: `${expectedPct}%` }}>
                 ▲ forventet i dag ({expectedPct}%)
               </span>
@@ -250,38 +340,7 @@ export default async function BoardPage({ searchParams }) {
         );
       })()}
 
-      {/* Tre nyhedskanaler - hver bjaelke vises kun naar den har noget i luften */}
-      {CATEGORY_ORDER.map((catKey) => {
-        const cat = NEWS_CATEGORIES[catKey];
-        const catNews = news.filter((n) => (n.category || "opslag") === catKey);
-        if (catNews.length === 0) return null;
-        const items = catNews.map((n) => (
-          <span key={n.id} className="mx-8 inline-flex items-center gap-2">
-            <span className={cat.text}>{n.message}</span>
-            <span className="text-slate-600">•</span>
-          </span>
-        ));
-        return (
-          <footer
-            key={catKey}
-            className={`mt-3 overflow-hidden rounded-xl border bg-slate-900/80 ${cat.bar}`}
-          >
-            <div className="flex items-stretch">
-              <div
-                className={`flex w-52 shrink-0 items-center justify-center px-3 font-display text-xs font-extrabold uppercase tracking-widest ${cat.badge}`}
-              >
-                {cat.icon} {cat.label}
-              </div>
-              <div className="ticker-mask flex-1 overflow-hidden py-2.5 text-sm">
-                <div className="ticker-track">
-                  <span>{items}</span>
-                  <span aria-hidden="true">{items}</span>
-                </div>
-              </div>
-            </div>
-          </footer>
-        );
-      })}
+
     </main>
   );
 }
