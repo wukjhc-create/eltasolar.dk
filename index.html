@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>ELTA Solar | Solceller, Varmepumper & Elinstallationer i hele Danmark</title>
     <meta name="description" content="Professionel installation af solceller, varmepumper, ladestandere og elinstallationer. 15+ års erfaring, autoriseret og certificeret. Døgnservice 24/7.">
     <meta name="keywords" content="solceller, solcelleanlæg, varmepumpe, ladestander, elbil, elinstallation, elektriker, grøn energi, BESS, batterilagring, døgnvagt, netbalancering, Danmark">
@@ -57,6 +60,15 @@
         .ferie-bar a{color:#fff;text-decoration:underline}
         .ferie-bar a:hover{color:#0a1628}
         .ferie-bar .badge{background:#fff;color:#ea580c;font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px;text-transform:uppercase}
+        .ferie-hero{margin-bottom:44px;animation:fadeInUp .6s ease}
+        .ferie-hero-inner{background:linear-gradient(135deg,#f97316 0%,#ea580c 100%);border-radius:22px;padding:40px 32px;text-align:center;box-shadow:0 24px 60px rgba(249,115,22,.4);border:1px solid rgba(255,255,255,.18)}
+        .ferie-hero-badge{display:inline-flex;align-items:center;gap:8px;background:#fff;color:#ea580c;font-size:14px;font-weight:800;padding:9px 20px;border-radius:999px;text-transform:uppercase;letter-spacing:1px;margin-bottom:18px}
+        .ferie-hero-title{color:#fff;font-size:2.2rem;font-weight:800;line-height:1.15;margin-bottom:6px}
+        .ferie-hero-dates{color:#fff;font-size:1.7rem;font-weight:800;margin-bottom:14px}
+        .ferie-hero-text{color:rgba(255,255,255,.96);font-size:1.1rem;line-height:1.5;max-width:600px;margin:0 auto 22px}
+        .ferie-hero-btn{display:inline-flex;align-items:center;gap:10px;background:#0a1628;color:#fff;font-weight:700;padding:15px 30px;border-radius:12px;font-size:1.05rem;transition:all .3s ease}
+        .ferie-hero-btn:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.35)}
+        @media(max-width:640px){.ferie-hero-inner{padding:30px 20px;border-radius:18px}.ferie-hero-title{font-size:1.6rem}.ferie-hero-dates{font-size:1.35rem}.ferie-hero-text{font-size:1rem}}
         .has-announcement .header{top:40px}
         .has-announcement .hero{padding-top:120px}
         .header.scrolled{padding:10px 0;box-shadow:0 4px 20px rgba(0,0,0,.1)}
@@ -416,13 +428,29 @@
         // Måneder er 0-indekseret i JavaScript: juli = 6, august = 7.
         var start = new Date(2026, 6, 15, 0, 0, 0);   // 15. juli 2026 kl. 00:00
         var end   = new Date(2026, 7, 4, 23, 59, 59);  // 4. august 2026 kl. 23:59
-        var now = new Date();
-        if (now >= start && now <= end) {
-            var ferie = document.getElementById('ferie-bar');
+        function opdaterBanner(){
+            var ferieTop = document.getElementById('ferie-bar');
             var kampagne = document.getElementById('kampagne-bar');
-            if (ferie) ferie.style.display = 'block';
-            if (kampagne) kampagne.style.display = 'none';
+            var ferieHero = document.getElementById('ferie-hero');
+            var vis = (new Date() >= start && new Date() <= end);
+            if (vis) {
+                // Ferieperiode: skjul de tynde topbjælker, vis det store banner i hero-feltet
+                if (ferieTop) ferieTop.style.display = 'none';
+                if (kampagne) kampagne.style.display = 'none';
+                if (ferieHero) ferieHero.style.display = 'block';
+                document.body.classList.remove('has-announcement');
+            } else {
+                // Normal periode: vis kampagne-bjælken i toppen igen
+                if (ferieTop) ferieTop.style.display = 'none';
+                if (kampagne) kampagne.style.display = 'block';
+                if (ferieHero) ferieHero.style.display = 'none';
+                document.body.classList.add('has-announcement');
+            }
         }
+        opdaterBanner();
+        // Kør igen hvis siden gendannes fra browserens "tilbage/frem"-cache (bfcache),
+        // så banneret ikke forsvinder efter navigation.
+        window.addEventListener('pageshow', opdaterBanner);
     })();
     </script>
     <header class="header" id="header">
@@ -449,6 +477,15 @@
     <div id="section-forside" class="page-section active">
         <section class="hero" id="hjem">
             <div class="container">
+                <div class="ferie-hero" id="ferie-hero" style="display:none">
+                    <div class="ferie-hero-inner">
+                        <span class="ferie-hero-badge">🌴 Ferielukket på telefonen</span>
+                        <h2 class="ferie-hero-title">Vi holder ferie</h2>
+                        <p class="ferie-hero-dates">27. juli – 4. august 2026</p>
+                        <p class="ferie-hero-text">Vores telefon er lukket i perioden. Du er meget velkommen til at sende os en mail — så vender vi tilbage, så snart vi er tilbage fra ferie.</p>
+                        <a class="ferie-hero-btn" href="mailto:kontakt@eltasolar.dk">✉️ Skriv til os på kontakt@eltasolar.dk</a>
+                    </div>
+                </div>
                 <div class="hero-content">
                     <div class="hero-text">
                         <h1 class="hero-title">Din partner i <span>grøn energi</span> og elteknik</h1>
