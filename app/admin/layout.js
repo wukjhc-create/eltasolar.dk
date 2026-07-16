@@ -18,6 +18,7 @@ const NAV = [
   { href: "/admin/tilbage", label: "Tilbagekørsler" },
   { href: "/admin/nyheder", label: "Nyheder" },
   { href: "/admin/flaade", label: "Flåden" },
+  { href: "/admin/standard", label: "ELTA Standard" },
   { href: "/admin/synk", label: "Synk" },
 ];
 

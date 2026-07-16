@@ -10,12 +10,13 @@ import {
   MONTH_NAMES,
 } from "@/lib/dates";
 import { taskCounts, absencePct, topThreeTeams, topThreeByRole, uniqueCases, returnGoalStats, fagCaseDays } from "@/lib/stats";
-import { getGoals, getRevenue } from "@/lib/goals";
+import { getGoals, getRevenue, getFleetCarNames } from "@/lib/goals";
 import { getReturns } from "@/lib/returns";
 import { isNewsVisible, nowInCopenhagen, NEWS_CATEGORIES, CATEGORY_ORDER } from "@/lib/news";
 import { fetchGpsSmart } from "@/lib/ordrestyring";
 import { latestByCar, formatSince } from "@/lib/fleet";
 import FleetMap from "@/components/FleetMap";
+import SlideShow from "@/components/SlideShow";
 import BoardGrid from "@/components/BoardGrid";
 import TopThree from "@/components/TopThree";
 import AutoRefresh from "@/components/AutoRefresh";
@@ -51,12 +52,37 @@ export default async function BoardPage({ searchParams }) {
   let fleetError = null;
   {
     const numbers = [...new Set(tasks.map((t) => t.order_number).filter(Boolean))];
-    const gps = await fetchGpsSmart(numbers);
+    const gps = await fetchGpsSmart(numbers, await getFleetCarNames());
     if (gps.error) fleetError = gps.error;
     else {
       const all = latestByCar(gps.entries);
       fleetTotal = all.length;
       fleetCars = all.filter((c) => c.bilNo != null);
+    }
+  }
+
+  // ELTA Standard: aktive slides filtreret paa dato og ugedag
+  let slides = [];
+  let slidesDefaultDuration = 15;
+  {
+    const [{ data: rawSlides }, { data: slideSettings }] = await Promise.all([
+      db().from("info_slides").select("*").eq("is_active", true).order("sort_order"),
+      db().from("settings").select("key,value").in("key", ["slides_default_duration", "slides_paused"]),
+    ]);
+    const map = Object.fromEntries((slideSettings || []).map((r) => [r.key, r.value]));
+    slidesDefaultDuration = parseInt(map.slides_default_duration, 10) || 15;
+    const paused = map.slides_paused === "1";
+    const todayISO = nowCph.isoDate;
+    if (!paused) {
+      slides = (rawSlides || []).filter((sl) => {
+        if (sl.start_date && sl.start_date > todayISO) return false;
+        if (sl.end_date && sl.end_date < todayISO) return false;
+        if (sl.weekdays) {
+          const days = String(sl.weekdays).split(",").map((d) => parseInt(d, 10));
+          if (!days.includes(nowCph.isoDay)) return false;
+        }
+        return true;
+      });
     }
   }
   const goal = returnGoalStats(monthTasks || [], monthReturns, goals.returnPct);
@@ -164,11 +190,11 @@ export default async function BoardPage({ searchParams }) {
           >
             <div className="flex items-stretch">
               <div
-                className={`flex w-56 shrink-0 items-center justify-center px-3 font-display text-base font-extrabold uppercase tracking-widest ${cat.badge}`}
+                className={`flex w-80 shrink-0 items-center justify-center px-4 font-display text-2xl font-extrabold uppercase tracking-widest ${cat.badge}`}
               >
                 {cat.icon} {cat.label}
               </div>
-              <div className="ticker-mask flex-1 overflow-hidden py-2.5 text-xl font-semibold">
+              <div className="ticker-mask flex-1 overflow-hidden py-5 text-4xl font-semibold">
                 <div className="ticker-track">
                   <span>{items}</span>
                   <span aria-hidden="true">{items}</span>
@@ -203,6 +229,15 @@ export default async function BoardPage({ searchParams }) {
                 : "ingen GPS-ture fundet endnu – tjek at OS Vehicle-enhederne er aktive"}
           </div>
         )}
+
+        {/* ELTA Standard: diasshow med kultur- og kvalitetsslides */}
+        {slides.length > 0 && (
+          <div className="rise mt-3 overflow-hidden rounded-2xl border border-[#E7E1D2] bg-white">
+            <div className="aspect-[16/7] w-full">
+              <SlideShow slides={slides} defaultDuration={slidesDefaultDuration} />
+            </div>
+          </div>
+        )}
         </div>
 
         {/* Sidepanel */}
@@ -219,43 +254,43 @@ export default async function BoardPage({ searchParams }) {
               <TopThree title={`Elektrikere – ${monthLabel}`} entries={top3ElectriciansMonth} />
             </div>
           </div>
-          <div className="rise rounded-2xl bg-[#26215C] p-4">
-            <div className="text-[13px] font-extrabold uppercase tracking-widest text-[#CECBF6] mb-2">
-              Tilbagekørsel <span className="text-[#8F8AC9] normal-case font-semibold">(mål ≤ {goal.goalPct}%)</span>
+          <div className={panelCard}>
+            <div className="text-[13px] font-extrabold uppercase tracking-widest text-[#26215C] mb-2">
+              Tilbagekørsel <span className="text-[#888780] normal-case font-semibold">(mål ≤ {goal.goalPct}%)</span>
             </div>
             <div className="flex items-baseline justify-between text-sm">
-              <span className="text-[#AFA9EC]">Denne uge</span>
-              <span className={`font-display text-2xl font-extrabold tabular-nums ${weekReturn.ok ? "text-[#9FE1CB]" : "text-[#F09595]"}`}>
+              <span className="text-[#5F5E5A]">Denne uge</span>
+              <span className={`font-display text-2xl font-extrabold tabular-nums ${weekReturn.ok ? "text-[#3B6D11]" : "text-[#A32D2D]"}`}>
                 {weekReturn.pct}%
               </span>
             </div>
             <div className="flex items-baseline justify-between text-sm mt-1">
-              <span className="text-[#AFA9EC]">{monthName[0].toUpperCase() + monthName.slice(1)}</span>
-              <span className={`font-display text-2xl font-extrabold tabular-nums ${goal.ok ? "text-[#9FE1CB]" : "text-[#F09595]"}`}>
+              <span className="text-[#5F5E5A]">{monthName[0].toUpperCase() + monthName.slice(1)}</span>
+              <span className={`font-display text-2xl font-extrabold tabular-nums ${goal.ok ? "text-[#3B6D11]" : "text-[#A32D2D]"}`}>
                 {goal.pct}%
               </span>
             </div>
-            <div className="text-xs text-[#8F8AC9] mt-0.5">
+            <div className="text-xs text-[#888780] mt-0.5">
               {goal.returned} tilbagekørsler i {monthName} ({goal.total} sager) – tælles den dag de registreres
             </div>
 
-            <div className="mt-3 border-t border-[#3C3489] pt-2">
-              <div className="text-[13px] font-extrabold uppercase tracking-widest text-[#CECBF6] mb-2">
-                Sygefravær <span className="text-[#8F8AC9] normal-case font-semibold">(mål ≤ {goals.sickPct}%)</span>
+            <div className="mt-3 border-t border-[#EDE7D8] pt-2">
+              <div className="text-[13px] font-extrabold uppercase tracking-widest text-[#26215C] mb-2">
+                Sygefravær <span className="text-[#888780] normal-case font-semibold">(mål ≤ {goals.sickPct}%)</span>
               </div>
               <div className="flex items-baseline justify-between text-sm">
-                <span className="text-[#AFA9EC]">Denne uge</span>
-                <span className={`font-display text-2xl font-extrabold tabular-nums ${weekAbsence.syg.pct <= goals.sickPct ? "text-[#9FE1CB]" : "text-[#F09595]"}`}>
+                <span className="text-[#5F5E5A]">Denne uge</span>
+                <span className={`font-display text-2xl font-extrabold tabular-nums ${weekAbsence.syg.pct <= goals.sickPct ? "text-[#3B6D11]" : "text-[#A32D2D]"}`}>
                   {weekAbsence.syg.pct}%
                 </span>
               </div>
               <div className="flex items-baseline justify-between text-sm mt-1">
-                <span className="text-[#AFA9EC]">{monthName[0].toUpperCase() + monthName.slice(1)}</span>
-                <span className={`font-display text-2xl font-extrabold tabular-nums ${monthAbsence.syg.pct <= goals.sickPct ? "text-[#9FE1CB]" : "text-[#F09595]"}`}>
+                <span className="text-[#5F5E5A]">{monthName[0].toUpperCase() + monthName.slice(1)}</span>
+                <span className={`font-display text-2xl font-extrabold tabular-nums ${monthAbsence.syg.pct <= goals.sickPct ? "text-[#3B6D11]" : "text-[#A32D2D]"}`}>
                   {monthAbsence.syg.pct}%
                 </span>
               </div>
-              <div className="text-xs text-[#8F8AC9] mt-0.5">
+              <div className="text-xs text-[#888780] mt-0.5">
                 {monthAbsence.syg.hours} sygetimer af {monthAbsence.netPossible} mulige (efter ferie)
               </div>
             </div>

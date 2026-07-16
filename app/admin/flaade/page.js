@@ -1,4 +1,6 @@
 import { fetchGpsSmart } from "@/lib/ordrestyring";
+import { getFleetCarNames } from "@/lib/goals";
+import { gemBilnavne } from "./actions";
 import { db } from "@/lib/db";
 import { toISODate, addDays } from "@/lib/dates";
 import { latestByCar, formatSince } from "@/lib/fleet";
@@ -16,7 +18,8 @@ export default async function FleetPage() {
     .not("order_number", "is", null)
     .limit(300);
   const numbers = [...new Set((recent || []).map((r) => r.order_number))];
-  const result = await fetchGpsSmart(numbers);
+  const carNames = await getFleetCarNames();
+  const result = await fetchGpsSmart(numbers, carNames);
   const cars = result.entries ? latestByCar(result.entries) : [];
   const viaLabel =
     result.via === "cars"
@@ -39,6 +42,26 @@ export default async function FleetPage() {
         &quot;Bil 1&quot;–&quot;Bil 11&quot; i OS Vehicle, så matcher numre og farver tavlen
         automatisk.
       </p>
+
+      <form action={gemBilnavne} className="card mb-5 max-w-2xl p-4">
+        <div className="mb-1 text-xs font-bold uppercase tracking-wide text-slate-500">
+          Bilnavne fra OS Vehicle (én pr. linje)
+        </div>
+        <p className="mb-2 text-xs text-slate-500">
+          API&apos;ets egen bil-liste kommer pt. tom retur, så skriv navnene præcis som de står i
+          OS Vehicle (fx &quot;Flynn&quot; eller &quot;Bil 1&quot;) – så henter Flåden turene pr. bil.
+        </p>
+        <textarea
+          name="names"
+          rows={5}
+          defaultValue={carNames.join("\n")}
+          placeholder={"Bil 1\nBil 2\nFlynn\nKean/dennis"}
+          className="w-full rounded-lg border border-slate-300 p-2 text-sm"
+        />
+        <button type="submit" className="btn-primary mt-2">
+          Gem bilnavne
+        </button>
+      </form>
 
       {result.error ? (
         <div className="max-w-2xl space-y-3">
