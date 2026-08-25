@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ELTA Solar | Solceller, Varmepumper &amp; Elinstallationer i hele Danmark</title>
+<meta name="description" content="Professionel installation af solceller, varmepumper, ladestandere og elinstallationer. 15+ års erfaring. Døgnservice 24/7. Fra sol til stikkontakt.">
+<link rel="canonical" href="https://www.eltasolar.dk/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.eltasolar.dk/">
+<meta property="og:title" content="ELTA Solar | Din partner i grøn energi og elteknik">
+<meta property="og:description" content="Professionel solcellemontage og elinstallation — fra private boliger til store erhvervsanlæg.">
+<meta property="og:image" content="https://www.eltasolar.dk/hero-billede.png">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF;--paper:#FBFCFA;--surface:#F4F7F4;--mist:#EDF3EE;
+    --ink:#131B15;--ink-2:#2A342C;--muted:#5C6A61;--faint:#8B978E;
+    --green:#1B8A2C;--green-600:#157021;--green-700:#0F5A1B;--green-tint:#E9F5EA;
+    --orange:#F79A12;--orange-600:#E0850A;
+    --line:#E6EDE6;--line-2:#EEF2EE;
+    --sh1:0 1px 2px rgba(18,40,24,.05);
+    --sh2:0 2px 6px rgba(18,40,24,.05),0 18px 40px rgba(18,40,24,.08);
+    --sh3:0 6px 14px rgba(18,40,24,.07),0 34px 70px rgba(18,40,24,.16);
+    --r:20px;--r-lg:30px;
+    --disp:'Sora',-apple-system,BlinkMacSystemFont,sans-serif;
+    --body:'Hanken Grotesk',-apple-system,sans-serif;
+    --maxw:1240px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{max-width:100%;display:block}
+  a{text-decoration:none;color:inherit;cursor:pointer}
+  ul{list-style:none}
+  ::selection{background:var(--green);color:#fff}
+  .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 34px}
+  h1,h2,h3,h4{font-family:var(--disp);letter-spacing:-.025em;line-height:1.05;font-weight:800}
+  .kicker{font-family:var(--body);font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--green)}
+  .btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-weight:700;font-size:16px;padding:16px 30px;border-radius:100px;border:1.5px solid transparent;cursor:pointer;transition:transform .25s cubic-bezier(.2,.7,.3,1),background .25s,color .25s,border-color .25s,box-shadow .25s}
+  .btn-orange{background:linear-gradient(145deg,var(--orange),var(--orange-600));color:#fff;box-shadow:0 10px 26px rgba(247,154,18,.32)}
+  .btn-orange:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(247,154,18,.42)}
+  .btn-green{background:linear-gradient(145deg,var(--green),var(--green-600));color:#fff;box-shadow:0 10px 26px rgba(27,138,44,.28)}
+  .btn-green:hover{transform:translateY(-3px)}
+  .btn-glass{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.45);backdrop-filter:blur(8px)}
+  .btn-glass:hover{background:rgba(255,255,255,.2);transform:translateY(-3px)}
+  .btn-ghost{background:#fff;color:var(--ink);border-color:var(--line)}
+  .btn-ghost:hover{border-color:var(--green);color:var(--green);transform:translateY(-3px)}
+
+  /* NAV */
+  header.nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .3s,box-shadow .3s,border-color .3s;border-bottom:1px solid transparent}
+  header.nav::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,25,15,.55),transparent);opacity:1;transition:opacity .3s;pointer-events:none}
+  header.nav.solid{background:rgba(255,255,255,.9);backdrop-filter:blur(14px);border-bottom-color:var(--line);box-shadow:var(--sh1)}
+  header.nav.solid::before{opacity:0}
+  .nav-inner{position:relative;display:flex;align-items:center;justify-content:space-between;height:88px}
+  .logo{height:44px;width:auto;transition:filter .3s}
+  header.nav:not(.solid) .logo{filter:brightness(0) invert(1)}
+  .nav-links{display:flex;gap:32px}
+  .nav-links a{font-size:15px;font-weight:600;color:#fff;opacity:.92;transition:color .2s,opacity .2s}
+  header.nav.solid .nav-links a{color:var(--ink)}
+  .nav-links a:hover{opacity:1;color:var(--orange)}
+  .nav-right{display:flex;align-items:center;gap:20px}
+  .nav-phone{font-weight:700;font-size:16px;color:#fff}
+  header.nav.solid .nav-phone{color:var(--ink)}
+  .nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;z-index:120}
+  .nav-toggle span{width:26px;height:2px;background:#fff;border-radius:2px;transition:.3s}
+  header.nav.solid .nav-toggle span{background:var(--ink)}
+
+  .page-section{display:none}
+  .page-section.active{display:block;animation:fadeSec .5s ease}
+  @keyframes fadeSec{from{opacity:0}to{opacity:1}}
+
+  /* HERO */
+  .hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;overflow:hidden;color:#fff}
+  .hero-media{position:absolute;inset:0;z-index:0;overflow:hidden}
+  .hero-media img{width:100%;height:100%;object-fit:cover;object-position:center 40%;transform:scale(1.02);animation:kenburns 22s ease-in-out infinite alternate}
+  @keyframes kenburns{from{transform:scale(1.02)}to{transform:scale(1.14)}}
+  .hero-scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(9,22,14,.82) 0%,rgba(9,22,14,.5) 42%,rgba(9,22,14,.15) 72%,rgba(9,22,14,.35) 100%),linear-gradient(0deg,rgba(9,22,14,.7) 0%,transparent 40%)}
+  .hero-inner{position:relative;z-index:2;width:100%;padding:0 0 84px}
+  .hero .kicker{color:#9be7b3;margin-bottom:22px;display:inline-flex;align-items:center;gap:12px;opacity:0;animation:up .8s .2s forwards}
+  .hero .kicker::before{content:"";width:32px;height:2px;background:#9be7b3}
+  .hero h1{font-size:clamp(40px,6vw,82px);font-weight:800;max-width:17ch;margin-bottom:24px;opacity:0;animation:up .9s .35s forwards}
+  .hero .lead{font-size:clamp(17px,1.6vw,21px);color:rgba(255,255,255,.9);max-width:52ch;margin-bottom:36px;line-height:1.5;opacity:0;animation:up .9s .5s forwards}
+  .hero-cta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;opacity:0;animation:up .9s .65s forwards}
+  .hero-play{display:inline-flex;align-items:center;gap:12px;color:#fff;font-weight:600;font-size:15px}
+  .hero-play .circ{width:52px;height:52px;border-radius:50%;border:1.5px solid rgba(255,255,255,.55);display:grid;place-items:center;transition:background .25s,transform .25s}
+  .hero-play:hover .circ{background:rgba(255,255,255,.16);transform:scale(1.06)}
+  .hero-play svg{width:18px;height:18px;margin-left:2px}
+  @keyframes up{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+  .scrolldown{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:3;color:rgba(255,255,255,.7);font-size:11px;letter-spacing:.2em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px}
+  .scrolldown .bar{width:1px;height:38px;background:linear-gradient(180deg,rgba(255,255,255,.7),transparent);animation:drop 2s ease-in-out infinite}
+  @keyframes drop{0%{opacity:0;transform:scaleY(.3)}40%{opacity:1}100%{opacity:0;transform:translateY(20px) scaleY(1)}}
+
+  section{position:relative}
+  .pad{padding:120px 0}.pad-sm{padding:90px 0}
+  .head{max-width:760px;margin-bottom:64px}
+  .head.center{margin-left:auto;margin-right:auto;text-align:center}
+  .head h2{font-size:clamp(30px,4vw,50px);margin:16px 0 18px;text-wrap:balance}
+  .head p{color:var(--muted);font-size:18px;line-height:1.6}
+
+  /* INTRO */
+  .intro-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:70px;align-items:center}
+  .intro h2{font-size:clamp(28px,3.4vw,44px);line-height:1.12;margin-bottom:24px}
+  .intro h2 span{color:var(--green)}
+  .intro p{color:var(--muted);font-size:17px;margin-bottom:16px;max-width:52ch}
+  .intro-side{background:linear-gradient(160deg,var(--green-tint),#fff);border:1px solid var(--line);border-radius:var(--r-lg);padding:40px;box-shadow:var(--sh2)}
+  .intro-side .mk{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+  .intro-side .mk img{height:46px}
+  .intro-side ul{display:flex;flex-direction:column;gap:14px}
+  .intro-side li{display:flex;gap:12px;align-items:flex-start;font-size:15.5px;color:var(--ink-2)}
+  .intro-side li svg{width:22px;height:22px;stroke:var(--green);flex-shrink:0;margin-top:1px}
+
+  /* STATS */
+  .stats{background:linear-gradient(180deg,var(--surface),var(--paper))}
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px}
+  .stat{text-align:center}
+  .stat .n{font-family:var(--disp);font-weight:800;font-size:clamp(44px,5.2vw,68px);line-height:1;letter-spacing:-.03em;background:linear-gradient(135deg,var(--green),#2fae43);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-variant-numeric:tabular-nums}
+  .stat .l{font-size:15px;color:var(--muted);margin-top:12px;font-weight:600}
+
+  /* SERVICES */
+  .svcs{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .svc{background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:38px 32px;box-shadow:var(--sh1);transition:transform .3s cubic-bezier(.2,.7,.3,1),box-shadow .3s,border-color .3s}
+  .svc:hover{transform:translateY(-8px);box-shadow:var(--sh3);border-color:transparent}
+  .svc .ico{width:60px;height:60px;border-radius:16px;background:linear-gradient(150deg,var(--green-tint),#dcefdf);display:grid;place-items:center;margin-bottom:24px;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+  .svc .ico svg{width:30px;height:30px;stroke:var(--green)}
+  .svc h3{font-size:23px;margin-bottom:10px;font-weight:700}
+  .svc p{color:var(--muted);font-size:15px;line-height:1.6;margin-bottom:18px}
+  .svc .lnk{font-weight:700;font-size:14.5px;color:var(--orange);display:inline-flex;gap:8px;transition:gap .2s}
+  .svc:hover .lnk{gap:13px}
+
+  /* SEGMENTS */
+  .seg{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .seg-card{position:relative;border-radius:var(--r-lg);overflow:hidden;min-height:460px;display:flex;align-items:flex-end;color:#fff;box-shadow:var(--sh2)}
+  .seg-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;transition:transform .7s cubic-bezier(.2,.7,.3,1)}
+  .seg-card:hover img{transform:scale(1.06)}
+  .seg-card .sc{position:absolute;inset:0;z-index:1;background:linear-gradient(0deg,rgba(9,30,17,.9) 5%,rgba(9,30,17,.25) 55%,rgba(9,30,17,.1) 100%)}
+  .seg-card .c{position:relative;z-index:2;padding:44px}
+  .seg-card .tag{font-size:12.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#9be7b3;margin-bottom:12px;display:block}
+  .seg-card h3{font-size:30px;margin-bottom:12px;font-weight:800}
+  .seg-card p{color:rgba(255,255,255,.9);font-size:15.5px;max-width:40ch;margin-bottom:22px}
+  .seg-card .lnk{display:inline-flex;align-items:center;gap:9px;font-weight:700;color:#fff;border-bottom:2px solid var(--orange);padding-bottom:3px;transition:gap .2s}
+  .seg-card:hover .lnk{gap:14px}
+
+  /* DÆKNING / MAP */
+  .cover{background:var(--surface)}
+  .cover-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .cover h2{font-size:clamp(28px,3.6vw,44px);margin:16px 0 16px}
+  .cover p{color:var(--muted);font-size:17px;margin-bottom:26px;max-width:44ch}
+  .cover-stats{display:flex;gap:40px;margin-bottom:30px}
+  .cover-stats .n{font-family:var(--disp);font-weight:800;font-size:40px;color:var(--green);line-height:1}
+  .cover-stats .l{font-size:14px;color:var(--muted);margin-top:6px}
+  .cover-map{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh2);padding:34px;display:flex;flex-direction:column;align-items:center;gap:14px}
+  .cover-map svg{width:100%;max-width:320px;height:auto}
+  .cover-map .dot{fill:var(--green)}
+  .cover-map .dot.o{fill:var(--orange)}
+
+  /* SHOWCASE */
+  .show-grid{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:230px;gap:20px}
+  .shot{position:relative;border-radius:var(--r);overflow:hidden;box-shadow:var(--sh1)}
+  .shot img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.2,.7,.3,1)}
+  .shot:hover img{transform:scale(1.08)}
+  .shot .cap{position:absolute;inset:0;z-index:1;background:linear-gradient(0deg,rgba(9,30,17,.82),transparent 55%);display:flex;flex-direction:column;justify-content:flex-end;padding:24px;color:#fff;opacity:0;transition:opacity .35s}
+  .shot:hover .cap{opacity:1}
+  .shot .cap h4{font-size:19px;font-weight:700;margin-bottom:3px}
+  .shot .cap span{font-size:13px;color:rgba(255,255,255,.8)}
+  .shot.big{grid-column:span 4;grid-row:span 2}
+  .shot.tall{grid-column:span 2;grid-row:span 2}
+  .shot.wide{grid-column:span 2;grid-row:span 1}
+
+  /* VIDEO BAND */
+  .band{position:relative;min-height:560px;display:flex;align-items:center;justify-content:center;overflow:hidden;color:#fff;text-align:center}
+  .band-bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;background-attachment:fixed}
+  .band-sc{position:absolute;inset:0;z-index:1;background:linear-gradient(0deg,rgba(9,22,14,.72),rgba(9,22,14,.5))}
+  .band-c{position:relative;z-index:2;padding:40px}
+  .band-c .kicker{color:#9be7b3}
+  .band-c h2{font-size:clamp(30px,4.4vw,54px);margin:16px 0 26px;max-width:20ch}
+  .play-big{position:relative;width:92px;height:92px;border-radius:50%;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.6);display:grid;place-items:center;margin:0 auto;cursor:pointer;transition:transform .3s,background .3s;backdrop-filter:blur(6px)}
+  .play-big:hover{transform:scale(1.08);background:rgba(255,255,255,.24)}
+  .play-big svg{width:30px;height:30px;margin-left:4px}
+  .play-big::after{content:"";position:absolute;width:92px;height:92px;border-radius:50%;border:1px solid rgba(255,255,255,.4);animation:ripple 2.6s ease-out infinite}
+  @keyframes ripple{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.7);opacity:0}}
+
+  /* TESTIMONIALS */
+  .tests{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .test{background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:34px 30px;box-shadow:var(--sh1)}
+  .test .stars{color:var(--orange);letter-spacing:3px;font-size:17px;margin-bottom:18px}
+  .test p{font-size:16.5px;color:var(--ink-2);margin-bottom:22px;line-height:1.6}
+  .test .who{display:flex;align-items:center;gap:13px}
+  .test .av{width:46px;height:46px;border-radius:50%;background:var(--green-tint);color:var(--green);display:grid;place-items:center;font-weight:700;font-family:var(--disp)}
+  .test .nm{font-weight:700;font-size:15px}
+  .test .rl{font-size:13px;color:var(--muted)}
+  .ph-note{text-align:center;color:var(--faint);font-size:13px;margin-top:26px;font-style:italic}
+
+  /* PARTNERS */
+  .partners{text-align:center}
+  .partners .lbl{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:34px}
+  .plogos{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px}
+  .plogo{height:76px;min-width:170px;flex:1;max-width:200px;border:1px solid var(--line);border-radius:16px;display:grid;place-items:center;background:var(--paper);color:var(--faint);font-family:var(--disp);font-weight:700;font-size:15px;transition:color .25s,border-color .25s,transform .25s}
+  .plogo:hover{color:var(--green);border-color:var(--green-tint);transform:translateY(-3px)}
+
+  /* KONTAKT */
+  .kontakt{background:var(--mist)}
+  .k-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:0;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh3)}
+  .k-left{background:linear-gradient(150deg,var(--green-700),var(--green) 60%,#26a03a);color:#fff;padding:56px 48px}
+  .k-left .kicker{color:rgba(255,255,255,.82)}
+  .k-left h2{font-size:clamp(28px,3.4vw,42px);margin:16px 0 16px;color:#fff}
+  .k-left>p{color:rgba(255,255,255,.9);font-size:17px;margin-bottom:32px;max-width:36ch}
+  .k-item{display:flex;gap:14px;align-items:flex-start;margin-bottom:22px}
+  .k-item .i{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.15);display:grid;place-items:center;flex-shrink:0}
+  .k-item .i svg{width:22px;height:22px;stroke:#fff}
+  .k-item h4{font-size:15px;font-weight:700;margin-bottom:3px}
+  .k-item p,.k-item a{color:rgba(255,255,255,.9);font-size:15px}
+  .k-right{background:#fff;padding:48px 44px}
+  .k-right h3{font-size:22px;font-weight:800;margin-bottom:6px}
+  .k-right>p{color:var(--muted);font-size:14.5px;margin-bottom:26px}
+  .contact-form{display:flex;flex-direction:column;gap:18px}
+  .fg{display:flex;flex-direction:column;gap:6px}
+  .fg label{font-size:13px;font-weight:600;color:var(--ink-2)}
+  .fg label .req{color:var(--orange)}
+  .fg input,.fg textarea,.fg select{padding:14px 16px;border:1.5px solid var(--line);border-radius:12px;font-size:15px;font-family:var(--body);background:var(--paper);color:var(--ink);transition:border-color .2s,box-shadow .2s}
+  .fg input:focus,.fg textarea:focus,.fg select:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 4px rgba(27,138,44,.1);background:#fff}
+  .fg textarea{min-height:110px;resize:vertical}
+  .fg select{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235C6A61' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:44px}
+  .frow{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .contact-form .btn{width:100%;justify-content:center;margin-top:6px}
+
+  /* SUBPAGES */
+  .sp-hero{padding:150px 0 70px;text-align:center;background:radial-gradient(900px 400px at 80% 0%,var(--green-tint) 0%,transparent 60%),var(--paper);border-bottom:1px solid var(--line)}
+  .sp-hero h1{font-size:clamp(32px,4.4vw,54px);margin-bottom:14px}
+  .sp-hero p{color:var(--muted);font-size:18px;max-width:600px;margin:0 auto}
+  .sp-body{padding:80px 0}
+  .sp-wrap{max-width:840px;margin:0 auto}
+  .cs{margin-bottom:46px}
+  .cs h2{font-size:26px;font-weight:800;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--line)}
+  .cs h3{font-size:18px;font-weight:700;color:var(--ink);margin:22px 0 8px;font-family:var(--disp)}
+  .cs p{color:var(--muted);margin-bottom:14px}
+  .cs a{color:var(--green);font-weight:600}
+  .info-box{background:var(--green-tint);border-left:4px solid var(--green);padding:24px;margin:24px 0;border-radius:0 14px 14px 0}
+  .info-box p{margin-bottom:6px;color:var(--ink-2)}
+  .info-box p:last-child{margin-bottom:0}
+
+  /* PRICING accordion */
+  .pricing-wrap{max-width:900px;margin:0 auto}
+  .price-section{background:#fff;border:1px solid var(--line);border-radius:16px;margin-bottom:16px;box-shadow:var(--sh1);overflow:hidden}
+  .price-header{display:flex;align-items:center;justify-content:space-between;padding:24px 28px;cursor:pointer;transition:background .2s}
+  .price-header:hover{background:var(--paper)}
+  .price-hl{display:flex;align-items:center;gap:16px}
+  .price-icon{width:48px;height:48px;border-radius:12px;background:linear-gradient(150deg,var(--green-tint),#dcefdf);display:grid;place-items:center;color:var(--green)}
+  .price-icon svg{width:24px;height:24px}
+  .price-title{font-size:20px;font-weight:700;margin:0}
+  .price-toggle{width:34px;height:34px;border-radius:10px;background:var(--surface);display:grid;place-items:center}
+  .price-toggle svg{width:18px;height:18px;color:var(--muted);transition:transform .3s}
+  .price-section.open .price-toggle svg{transform:rotate(180deg)}
+  .price-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+  .price-section.open .price-body{max-height:1400px}
+  .price-inner{padding:0 28px 28px;border-top:1px solid var(--line)}
+  .price-grid{display:grid;gap:12px;margin-top:22px}
+  .price-item{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;background:var(--paper);border-radius:12px}
+  .price-item.hl{background:var(--green-tint)}
+  .price-label{font-weight:500;color:var(--ink-2)}
+  .price-value{font-weight:700;color:var(--green)}
+  .price-note{font-size:12px;color:var(--faint);font-weight:400;margin-left:6px}
+  .price-info{background:#FFF8EC;border:1px solid #FBE3B4;border-radius:12px;padding:16px 20px;margin-top:18px}
+  .price-info p{margin:0;font-size:14.5px;color:#8a5a12}
+  .price-info.green{background:var(--green-tint);border-color:#b6e2be}
+  .price-info.green p{color:var(--green-700)}
+  .tillaeg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:22px}
+  .tillaeg-card{background:var(--paper);border-radius:14px;padding:26px 20px;text-align:center;border:1px solid var(--line)}
+  .tillaeg-percent{font-family:var(--disp);font-size:40px;font-weight:800;color:var(--orange);line-height:1}
+  .tillaeg-label{font-size:15px;color:var(--ink-2);margin-top:10px;font-weight:600}
+  .tillaeg-moms{font-size:12px;color:var(--faint);margin-top:4px}
+  .dv-table{width:100%;margin-top:20px;border-collapse:collapse;font-size:14.5px}
+  .dv-table th,.dv-table td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--line)}
+  .dv-table th{background:var(--paper);font-weight:700;color:var(--ink-2)}
+  .dv-table .pc{font-weight:700;color:var(--green)}
+  .cond-list{margin-top:18px}
+  .cond-item{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line)}
+  .cond-item:last-child{border-bottom:none}
+  .cond-ic{width:24px;height:24px;border-radius:50%;background:var(--green-tint);display:grid;place-items:center;flex-shrink:0;margin-top:2px}
+  .cond-ic svg{width:14px;height:14px;color:var(--green)}
+  .cond-tx{color:var(--muted)}.cond-tx strong{color:var(--ink)}
+  .sp-cta{background:linear-gradient(150deg,var(--green-700),var(--green));border-radius:var(--r-lg);padding:48px;text-align:center;color:#fff;margin-top:40px}
+  .sp-cta h3{font-size:26px;margin-bottom:12px}
+  .sp-cta p{opacity:.9;margin-bottom:26px}
+  .last-updated{text-align:center;color:var(--faint);font-size:13px;margin-top:34px}
+
+  /* FOOTER */
+  footer.ft{background:var(--surface);color:var(--muted);padding:70px 0 36px;border-top:1px solid var(--line)}
+  .ft-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:44px;margin-bottom:48px}
+  .ft .logo{height:46px;margin-bottom:16px;filter:none}
+  .ft-brand p{max-width:32ch;font-size:15px}
+  .ft h4{font-family:var(--disp);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--green-700);margin-bottom:18px;font-weight:700}
+  .ft li{margin-bottom:11px}
+  .ft a,.ft .li{color:var(--muted);font-size:15px;transition:color .2s}
+  .ft a:hover{color:var(--green)}
+  .ft-bottom{border-top:1px solid var(--line);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:var(--faint);font-size:13px}
+  .ft-bottom a{margin-left:18px}
+
+  /* MODAL + COOKIE */
+  .modal-overlay{position:fixed;inset:0;background:rgba(9,22,14,.55);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:.3s}
+  .modal-overlay.active{opacity:1;visibility:visible}
+  .modal-content{background:#fff;border-radius:24px;padding:48px 40px;max-width:440px;width:90%;text-align:center;transform:scale(.92);transition:.3s;box-shadow:var(--sh3)}
+  .modal-overlay.active .modal-content{transform:scale(1)}
+  .modal-icon{width:76px;height:76px;border-radius:50%;background:linear-gradient(145deg,var(--green),var(--green-600));display:grid;place-items:center;margin:0 auto 22px}
+  .modal-icon svg{width:38px;height:38px;color:#fff}
+  .modal-title{font-size:24px;margin-bottom:10px}
+  .modal-text{color:var(--muted);margin-bottom:26px}
+  #cookie-popup{position:fixed;bottom:20px;left:20px;right:20px;max-width:460px;background:#fff;border-radius:18px;box-shadow:var(--sh3);z-index:900;padding:24px;border:1px solid var(--line)}
+  .cookie-content{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .cookie-text{flex:1;min-width:200px}
+  .cookie-text p{margin:0 0 6px;font-size:14px;color:var(--muted)}
+  .cookie-link{font-size:13px;color:var(--green);font-weight:600;cursor:pointer}
+
+  .rv{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.2,.7,.3,1),transform .8s cubic-bezier(.2,.7,.3,1)}
+  .rv.in{opacity:1;transform:none}
+  .rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}
+
+  @media(max-width:1024px){
+    .intro-grid{grid-template-columns:1fr;gap:44px}
+    .stats-grid{grid-template-columns:1fr 1fr;gap:40px}
+    .svcs{grid-template-columns:1fr 1fr}
+    .seg{grid-template-columns:1fr}
+    .cover-grid{grid-template-columns:1fr;gap:40px}
+    .show-grid{grid-template-columns:repeat(4,1fr);grid-auto-rows:200px}
+    .shot.big{grid-column:span 4}.shot.tall{grid-column:span 2}.shot.wide{grid-column:span 2}
+    .tests{grid-template-columns:1fr}
+    .k-grid{grid-template-columns:1fr}
+    .ft-grid{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:680px){
+    .wrap{padding:0 20px}
+    .nav-links{position:fixed;inset:0;background:#fff;flex-direction:column;justify-content:center;align-items:center;gap:28px;opacity:0;visibility:hidden;transition:.3s}
+    .nav-links.open{opacity:1;visibility:visible}
+    .nav-links a{color:var(--ink)!important;font-size:22px}
+    .nav-phone{display:none}.nav-toggle{display:flex}
+    .pad{padding:76px 0}.pad-sm{padding:60px 0}
+    .svcs{grid-template-columns:1fr}
+    .stats-grid{grid-template-columns:1fr 1fr;gap:30px}
+    .show-grid{grid-template-columns:1fr 1fr;grid-auto-rows:160px}
+    .shot.big{grid-column:span 2;grid-row:span 2}.shot.tall{grid-column:span 2}.shot.wide{grid-column:span 1}
+    .band-bg{background-attachment:scroll}
+    .frow{grid-template-columns:1fr}
+    .k-left,.k-right{padding:38px 26px}
+    .ft-grid{grid-template-columns:1fr}
+    .cover-stats{gap:28px}
+    .hero-inner{padding-bottom:64px}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}.hero .kicker,.hero h1,.hero .lead,.hero-cta{opacity:1}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a onclick="showSection('forside')"><img class="logo" src="logo.png" alt="Elta Solar"></a>
+    <nav class="nav-links" id="navlinks">
+      <a onclick="showSection('forside','ydelser')">Ydelser</a>
+      <a onclick="showSection('forside','segment')">Privat &amp; erhverv</a>
+      <a onclick="showSection('forside','projekter')">Projekter</a>
+      <a onclick="showSection('om-virksomheden')">Om os</a>
+      <a onclick="showSection('forside','kontakt')">Kontakt</a>
+    </nav>
+    <div class="nav-right">
+      <span class="nav-phone">70 60 51 50</span>
+      <a class="btn btn-orange" onclick="showSection('forside','kontakt')" style="padding:12px 24px;font-size:15px">Få et tilbud</a>
+      <button class="nav-toggle" id="navtoggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ FORSIDE ============ -->
+<div id="section-forside" class="page-section active">
+
+<section class="hero" id="top">
+  <div class="hero-media"><img src="solceller.png" alt="Elta Solar montør monterer solceller"></div>
+  <div class="hero-scrim"></div>
+  <div class="wrap hero-inner">
+    <span class="kicker">Solceller · Varmepumper · El · Batteri</span>
+    <h1>Professionel energi — fra private tage til store erhvervsanlæg</h1>
+    <p class="lead">Vi designer, monterer og servicerer hele løsningen fra ende til anden — med egne montører og døgnvagt i hele Danmark.</p>
+    <div class="hero-cta">
+      <a class="btn btn-orange" onclick="showSection('forside','kontakt')">Få et tilbud →</a>
+      <a class="btn btn-glass" onclick="showSection('forside','ydelser')">Se vores løsninger</a>
+      <a class="hero-play" href="#film"><span class="circ"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span> Se filmen</a>
+    </div>
+  </div>
+  <div class="scrolldown">Scroll<div class="bar"></div></div>
+</section>
+
+<section class="pad intro">
+  <div class="wrap intro-grid">
+    <div class="rv">
+      <span class="kicker">Elta Solar</span>
+      <h2>Din komplette partner i <span>grøn energi</span> og elteknik</h2>
+      <p>Vi hjælper private og erhverv med at producere, lagre og styre deres egen energi. Fra det første tilbud til den færdige installation — og servicen bagefter — er du hos det samme, faste team.</p>
+      <p>Ingen underleverandører, ingen løse ender. Bare ordentligt håndværk, moderne teknologi og en fair pris.</p>
+    </div>
+    <div class="intro-side rv d1">
+      <div class="mk"><img src="logo.png" alt="Elta Solar"></div>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Egne, faste montører — hele vejen</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Autorisationskrævende arbejde via ELCO ApS</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> TEKNIQ-medlem &amp; KMO-certificeret</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Døgnvagt 24/7 i hele Danmark</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="stats pad-sm">
+  <div class="wrap stats-grid">
+    <div class="stat rv"><div class="n"><span class="count" data-to="1400">0</span>+</div><div class="l">Anlæg monteret</div></div>
+    <div class="stat rv d1"><div class="n"><span class="count" data-to="221">0</span></div><div class="l">Byer i hele Danmark</div></div>
+    <div class="stat rv d2"><div class="n"><span class="count" data-to="15">0</span>+</div><div class="l">Års erfaring</div></div>
+    <div class="stat rv d3"><div class="n">24/7</div><div class="l">Døgnvagt året rundt</div></div>
+  </div>
+</section>
+
+<section class="pad" id="ydelser">
+  <div class="wrap">
+    <div class="head rv"><span class="kicker">Vores ydelser</span><h2>Én partner til hele energiløsningen</h2><p>Fra sol på taget til den sidste stikkontakt — vi leverer helheden, både til boligen og virksomheden.</p></div>
+    <div class="svcs">
+      <div class="svc rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M5 19l1.5-1.5"/></svg></div><h3>Solcelleanlæg</h3><p>Professionel installation til private og erhverv. Reducér elregning og CO₂-aftryk markant — med udstyr vi selv står inde for.</p><a class="lnk" onclick="showSection('forside','kontakt')">Få et tilbud →</a></div>
+      <div class="svc rv d1"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0-6 6c0 4 6 12 6 12s6-8 6-12a6 6 0 0 0-6-6Z"/><circle cx="12" cy="9" r="2"/></svg></div><h3>Varmepumper</h3><p>Energieffektiv opvarmning med luft/vand og jordvarme. Spar op til 75% på varmeregningen.</p><a class="lnk" onclick="showSection('forside','kontakt')">Få et tilbud →</a></div>
+      <div class="svc rv d2"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg></div><h3>Ladeløsninger</h3><p>Ladestandere til elbiler — smarte, sikre løsninger til hjemmet og virksomheden.</p><a class="lnk" onclick="showSection('forside','kontakt')">Få et tilbud →</a></div>
+      <div class="svc rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v6H4zM4 14h16v6H4zM8 7h.01M8 17h.01"/></svg></div><h3>Elinstallationer</h3><p>Alt i elarbejde af egne montører. Autorisationskrævende opgaver udføres via ELCO ApS.</p><a class="lnk" onclick="showSection('forside','kontakt')">Få et tilbud →</a></div>
+      <div class="svc rv d1"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M10 2h4M9 9h6M9 13h6"/></svg></div><h3>Batterianlæg &amp; BESS</h3><p>Batterier der lagrer din strøm og gør dig mere uafhængig — med intelligent, automatisk styring døgnet rundt.</p><a class="lnk" onclick="showSection('forside','kontakt')">Læs mere →</a></div>
+      <div class="svc rv d2"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div><h3>Service &amp; døgnvagt</h3><p>Løbende service og akut døgnvagt i hele landet. Vi står klar, når du har brug for os.</p><a class="lnk" onclick="showSection('forside','kontakt')">Læs mere →</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad-sm" id="segment">
+  <div class="wrap">
+    <div class="head center rv"><span class="kicker">Til hvem</span><h2>Løsninger til bolig og virksomhed</h2></div>
+    <div class="seg">
+      <div class="seg-card rv"><img src="solceller.png" alt="Privat solcelleanlæg"><div class="sc"></div><div class="c"><span class="tag">Til dit hjem</span><h3>Privat</h3><p>Solceller, varmepumpe, ladestander og batteri til parcelhuset — mere komfort, lavere regninger, større uafhængighed.</p><a class="lnk" onclick="showSection('forside','kontakt')">Se private løsninger →</a></div></div>
+      <div class="seg-card rv d1"><img src="bess.jpg" alt="Erhvervsanlæg"><div class="sc"></div><div class="c"><span class="tag">Til din virksomhed</span><h3>Erhverv</h3><p>Store tag- og markanlæg, batterilagring og netbalancering. Vi skalerer løsningen til jeres forbrug og drift.</p><a class="lnk" onclick="showSection('forside','kontakt')">Se erhvervsløsninger →</a></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cover pad">
+  <div class="wrap cover-grid">
+    <div class="rv">
+      <span class="kicker">Dækning</span>
+      <h2>Vi dækker hele Danmark</h2>
+      <p>Med base i Ringsted og Sorø kører vi ud til private og erhverv over hele landet.</p>
+      <div class="cover-stats">
+        <div><div class="n"><span class="count" data-to="1400">0</span>+</div><div class="l">Anlæg monteret</div></div>
+        <div><div class="n"><span class="count" data-to="221">0</span></div><div class="l">Byer i Danmark</div></div>
+      </div>
+      <a class="btn btn-green" href="kort.html">Se hele Danmarkskortet →</a>
+    </div>
+    <div class="cover-map rv d1">
+      <svg viewBox="0 0 220 150" fill="none" aria-label="Danmarkskort">
+        <g opacity=".2" stroke="#1B8A2C" stroke-width="1"><path d="M30 60 55 72 78 58 108 66 138 52 160 74M92 84 120 96 150 88"/></g>
+        <circle class="dot" cx="30" cy="60" r="4"/><circle class="dot" cx="55" cy="72" r="4"/><circle class="dot o" cx="78" cy="58" r="5"/><circle class="dot" cx="108" cy="66" r="4"/><circle class="dot" cx="138" cy="52" r="4"/><circle class="dot" cx="160" cy="74" r="4"/><circle class="dot" cx="92" cy="84" r="4"/><circle class="dot o" cx="120" cy="96" r="5"/><circle class="dot" cx="150" cy="88" r="4"/><circle class="dot" cx="45" cy="50" r="4"/>
+      </svg>
+      <div style="font-family:var(--disp);font-weight:800;font-size:34px;color:var(--green);line-height:1">221 byer</div>
+      <div style="color:var(--muted);font-size:14px">hvor vi har sat sol på taget</div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" id="projekter">
+  <div class="wrap">
+    <div class="head rv"><span class="kicker">Udvalgte projekter</span><h2>Se noget af det, vi har bygget</h2><p>Fra villatage til store erhvervsanlæg — leveret og monteret over hele landet.</p></div>
+    <div class="show-grid">
+      <div class="shot big rv"><img src="solceller.png" alt="Solcelleprojekt"><div class="cap"><h4>Tagmonteret solcelleanlæg</h4><span>Villa · Sjælland</span></div></div>
+      <div class="shot tall rv d1"><img src="elinstallation.jpg" alt="Elinstallation"><div class="cap"><h4>Eltavle &amp; installation</h4><span>Erhverv</span></div></div>
+      <div class="shot wide rv d2"><img src="varmepumpe.jpg" alt="Varmepumpe"><div class="cap"><h4>Varmepumpe</h4><span>Privatbolig</span></div></div>
+      <div class="shot wide rv d3"><img src="om-os.png" alt="Elarbejde"><div class="cap"><h4>Servicebesøg</h4><span>Døgnvagt</span></div></div>
+      <div class="shot wide rv"><img src="bess.jpg" alt="Batterianlæg"><div class="cap"><h4>BESS batterianlæg</h4><span>Erhverv</span></div></div>
+      <div class="shot wide rv d1"><img src="hero-billede.png" alt="Markanlæg"><div class="cap"><h4>Solcellepark</h4><span>Storskala</span></div></div>
+    </div>
+    <p class="ph-note">Billederne er eksempler — erstattes med jeres egne projektfotos.</p>
+  </div>
+</section>
+
+<section class="band" id="film">
+  <div class="band-bg" style="background-image:url('hero-billede.png')"></div>
+  <div class="band-sc"></div>
+  <div class="band-c rv"><span class="kicker">Film</span><h2>Se hvordan vi arbejder — fra tag til stikkontakt</h2><div class="play-big"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div></div>
+</section>
+
+<section class="pad">
+  <div class="wrap">
+    <div class="head center rv"><span class="kicker">Det siger kunderne</span><h2>Kunder i hele landet anbefaler os</h2></div>
+    <div class="tests">
+      <div class="test rv"><div class="stars">★★★★★</div><p>„Her indsætter I en rigtig kundeudtalelse — fx fra Trustpilot eller Google.”</p><div class="who"><div class="av">K</div><div><div class="nm">Kundenavn</div><div class="rl">Solceller · By</div></div></div></div>
+      <div class="test rv d1"><div class="stars">★★★★★</div><p>„Ægte anmeldelser skaber langt mere tillid end tekst vi selv finder på.”</p><div class="who"><div class="av">M</div><div><div class="nm">Kundenavn</div><div class="rl">Varmepumpe · By</div></div></div></div>
+      <div class="test rv d2"><div class="stars">★★★★★</div><p>„Siden kan kobles til jeres Trustpilot, så de nyeste anmeldelser hentes automatisk.”</p><div class="who"><div class="av">J</div><div><div class="nm">Kundenavn</div><div class="rl">Erhverv · By</div></div></div></div>
+    </div>
+    <p class="ph-note">Pladsholder-udtalelser — erstattes med jeres ægte anmeldelser.</p>
+  </div>
+</section>
+
+<section class="pad-sm partners">
+  <div class="wrap rv">
+    <div class="lbl">Vi arbejder med markedets førende mærker</div>
+    <div class="plogos"><div class="plogo">Solcellepaneler</div><div class="plogo">Invertere</div><div class="plogo">Batterier</div><div class="plogo">Ladestandere</div><div class="plogo">Varmepumper</div></div>
+    <p class="ph-note">Pladsholdere — erstattes med jeres leverandørers rigtige logoer.</p>
+  </div>
+</section>
+
+<section class="kontakt pad" id="kontakt">
+  <div class="wrap">
+    <div class="k-grid rv">
+      <div class="k-left">
+        <span class="kicker">Kontakt</span>
+        <h2>Lad os tale om dit projekt</h2>
+        <p>Få et gratis, uforpligtende tilbud i dag — vi vender tilbage inden for 24 timer.</p>
+        <div class="k-item"><div class="i"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.1a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2Z"/></svg></div><div><h4>Telefon</h4><a href="tel:70605150">70 60 51 50</a></div></div>
+        <div class="k-item"><div class="i"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div><div><h4>Email</h4><a href="mailto:kontakt@eltasolar.dk">kontakt@eltasolar.dk</a></div></div>
+        <div class="k-item"><div class="i"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></div><div><h4>Adresse</h4><p>Fuldbyvej 4 B, 4180 Sorø<br>Odinsvej 10, 4100 Ringsted</p></div></div>
+        <div class="k-item"><div class="i"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div><div><h4>Åbningstider</h4><p>Man–Fre 08:00–14:00 · Døgnvagt uden for åbningstid</p></div></div>
+      </div>
+      <div class="k-right">
+        <h3>Send os en besked</h3>
+        <p>Udfyld formularen, så vender vi tilbage hurtigst muligt.</p>
+        <form class="contact-form" action="https://formsubmit.co/kontakt@eltasolar.dk" method="POST">
+          <input type="hidden" name="_subject" value="Ny henvendelse fra eltasolar.dk">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          <div class="frow">
+            <div class="fg"><label>Navn <span class="req">*</span></label><input type="text" name="name" required></div>
+            <div class="fg"><label>Telefon <span class="req">*</span></label><input type="tel" name="phone" required></div>
+          </div>
+          <div class="fg"><label>Email <span class="req">*</span></label><input type="email" name="email" required></div>
+          <div class="fg"><label>Hvad drejer det sig om?</label><select name="inquiry_type"><option>Vælg ydelse…</option><option>Solceller</option><option>Varmepumpe</option><option>Ladeløsning</option><option>Elinstallation</option><option>Batterianlæg (BESS)</option><option>Andet</option></select></div>
+          <div class="fg"><label>Besked</label><textarea name="message" placeholder="Fortæl kort om dit projekt…"></textarea></div>
+          <button type="submit" class="btn btn-orange">Send henvendelse →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /forside -->
+
+<!-- ============ OM VIRKSOMHEDEN ============ -->
+<div id="section-om-virksomheden" class="page-section">
+  <section class="sp-hero"><div class="wrap"><h1>Om ELTA Solar</h1><p>Din komplette partner i grøn energi og elteknik</p></div></section>
+  <section class="sp-body"><div class="wrap"><div class="sp-wrap">
+    <div class="cs"><h2>Hvem er vi?</h2><p>ELTA Solar er en el- og energivirksomhed med speciale i grøn energi og moderne elteknik. Alt autorisationskrævende arbejde udføres i samarbejde med vores partner ELCO ApS. Vi har over 15 års erfaring i branchen og har hjulpet hundredvis af private og erhvervskunder med at reducere deres energiforbrug og CO₂-aftryk.</p></div>
+    <div class="cs"><h2>Vores værdier</h2><h3>Kvalitet</h3><p>Vi går aldrig på kompromis med kvaliteten. Alle vores installationer udføres efter højeste standarder.</p><h3>Tillid</h3><p>Gennemsigtighed og ærlighed er fundamentet for vores kundeforhold.</p><h3>Bæredygtighed</h3><p>Vi arbejder aktivt for en grønnere fremtid.</p></div>
+    <div class="cs"><h2>Autoriseret og certificeret</h2><p>Alt autorisationskrævende arbejde udføres i samarbejde med ELCO ApS. Vi er medlem af TEKNIQ og KMO-certificeret.</p><div class="info-box"><p><strong>Kontor / værksted:</strong> Odinsvej 10, 4100 Ringsted</p><p><strong>Adresse:</strong> Fuldbyvej 4 B, 4180 Sorø</p><p><strong>Telefon:</strong> <a href="tel:70605150">70 60 51 50</a></p><p><strong>E-mail:</strong> <a href="mailto:kontakt@eltasolar.dk">kontakt@eltasolar.dk</a></p><p><strong>CVR:</strong> 45630897</p></div></div>
+    <div class="sp-cta"><h3>Klar til at komme i gang?</h3><p>Få et gratis, uforpligtende tilbud i dag.</p><a class="btn btn-orange" onclick="showSection('forside','kontakt')">Kontakt os →</a></div>
+  </div></div></section>
+</div>
+
+<!-- ============ COOKIES ============ -->
+<div id="section-cookies" class="page-section">
+  <section class="sp-hero"><div class="wrap"><h1>Cookie- og privatlivspolitik</h1><p>Sådan behandler vi dine personoplysninger hos ELTA Solar</p></div></section>
+  <section class="sp-body"><div class="wrap"><div class="sp-wrap">
+    <div class="cs"><h2>Dataansvarlig</h2><p>Vi er dataansvarlig for behandlingen af de personoplysninger, som vi behandler om vores kunder og samarbejdspartnere.</p><div class="info-box"><p><strong>ELTA Solar</strong></p><p>Fuldbyvej 4 B, 4180 Sorø</p><p>CVR-nr.: 45630897</p></div><p>Kontakt os via <a href="mailto:kontakt@eltasolar.dk">kontakt@eltasolar.dk</a></p></div>
+    <div class="cs"><h2>Behandlingsaktiviteter</h2><p>Som dataansvarlig jf. GDPR har vi følgende behandlingsaktiviteter:</p><h3>Besøg på hjemmeside</h3><p>Når du besøger vores hjemmeside, anvender vi cookies for at hjemmesiden kan fungere.</p><h3>Kommunikation med potentielle kunder</h3><p>Vi behandler typisk: navn, email, telefonnummer. Hjemmel: databeskyttelsesforordningens artikel 6, stk. 1 litra f.</p><h3>Kunder</h3><p>Vi behandler oplysninger om navn, adresse, ydelser, særlige aftaler og betalingsinformationer. Hjemmel: artikel 6, stk. 1 litra b.</p><h3>Bogføring</h3><p>Vi gemmer regnskabsbilag i minimum 5 år jf. bogføringsloven.</p></div>
+    <div class="cs"><h2>De registreredes rettigheder</h2><p>Du har ret til: indsigt, berigtigelse, sletning, begrænsning af behandling, indsigelse og dataportabilitet.</p><p>Læs mere på <a href="https://www.datatilsynet.dk" target="_blank" rel="noopener">www.datatilsynet.dk</a></p></div>
+  </div></div></section>
+</div>
+
+<!-- ============ PRISER ============ -->
+<div id="section-priser" class="page-section">
+  <section class="sp-hero"><div class="wrap"><h1>Priser og vilkår</h1><p>Gennemsigtighed i priser og vilkår er vigtig for os</p></div></section>
+  <section class="sp-body"><div class="wrap"><div class="pricing-wrap">
+    <div class="price-section open"><div class="price-header" onclick="togglePrice(this)"><div class="price-hl"><div class="price-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><h2 class="price-title">Timelønsarbejde</h2></div><div class="price-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="price-body"><div class="price-inner"><div class="price-grid"><div class="price-item hl"><span class="price-label">Timepris elektriker/montør</span><span class="price-value">856,25 kr.<span class="price-note">inkl. moms</span></span></div><div class="price-item"><span class="price-label">Servicevogn</span><span class="price-value">125 kr./time<span class="price-note">inkl. moms</span></span></div><div class="price-item"><span class="price-label">Timeløn tekniker</span><span class="price-value">1.250 kr.<span class="price-note">inkl. moms</span></span></div></div><div class="price-info"><p><strong>Minimumsafregning:</strong> Der er minimums takst på 1 time. Efter første time afregnes per halvtime.</p></div></div></div></div>
+    <div class="price-section"><div class="price-header" onclick="togglePrice(this)"><div class="price-hl"><div class="price-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><h2 class="price-title">Tillæg</h2></div><div class="price-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="price-body"><div class="price-inner"><div class="tillaeg-grid"><div class="tillaeg-card"><div class="tillaeg-percent">3%</div><div class="tillaeg-label">Kvalitetssikring</div><div class="tillaeg-moms">ekskl. moms</div></div><div class="tillaeg-card"><div class="tillaeg-percent">2%</div><div class="tillaeg-label">Miljø- og affaldsgebyr</div><div class="tillaeg-moms">ekskl. moms</div></div></div></div></div></div>
+    <div class="price-section"><div class="price-header" onclick="togglePrice(this)"><div class="price-hl"><div class="price-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><h2 class="price-title">Døgnvagt / Udkald</h2></div><div class="price-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="price-body"><div class="price-inner"><div class="price-info green" style="margin-top:22px"><p><strong>ELTA Solar tilbyder udkald af elektriker døgnet rundt i hele landet.</strong></p></div><table class="dv-table"><thead><tr><th>Tidsrum</th><th>Udkaldstillæg inkl. første time</th><th>Pr. efterfølgende time</th></tr></thead><tbody><tr><td><strong>Hverdag 15:00–20:00</strong></td><td class="pc">1.995 kr. inkl. moms</td><td class="pc">1.450 kr. inkl. moms</td></tr><tr><td><strong>Hverdag 20:00–08:00</strong></td><td class="pc">2.995 kr. inkl. moms</td><td class="pc">1.450 kr. inkl. moms</td></tr><tr><td><strong>Weekend &amp; helligdage</strong></td><td class="pc">2.995 kr. inkl. moms</td><td class="pc">1.450 kr. inkl. moms</td></tr></tbody></table></div></div></div>
+    <div class="price-section"><div class="price-header" onclick="togglePrice(this)"><div class="price-hl"><div class="price-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><h2 class="price-title">Salgs- og leveringsbetingelser</h2></div><div class="price-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="price-body"><div class="price-inner"><div class="cond-list"><div class="cond-item"><div class="cond-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><div class="cond-tx"><strong>Tilbudsgrundlag:</strong> Afgivet iht. AB18 og TEKNIQ's standardforbehold.</div></div><div class="cond-item"><div class="cond-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><div class="cond-tx"><strong>Betalingsbetingelser:</strong> Netto kontant ved levering.</div></div><div class="cond-item"><div class="cond-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><div class="cond-tx"><strong>Tilbudsgyldighed:</strong> 1 måned fra tilbudsdato.</div></div><div class="cond-item"><div class="cond-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><div class="cond-tx"><strong>Kørsel:</strong> 50 km inkluderet. Over 50 km: 4,91 kr./km.</div></div></div></div></div></div>
+    <div class="sp-cta"><h3>Har du spørgsmål?</h3><p>Kontakt os gerne ved spørgsmål.</p><a class="btn btn-orange" onclick="showSection('forside','kontakt')">Kontakt os →</a></div>
+    <p class="last-updated">Sidst opdateret: Januar 2026</p>
+  </div></div></section>
+</div>
+
+<!-- FOOTER -->
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-grid">
+      <div class="ft-brand"><a onclick="showSection('forside')"><img class="logo" src="logo.png" alt="Elta Solar"></a><p>Din komplette partner i grøn energi og elteknik — fra sol til stikkontakt, i hele Danmark.</p></div>
+      <div><h4>Ydelser</h4><ul><li><a onclick="showSection('forside','ydelser')">Solceller</a></li><li><a onclick="showSection('forside','ydelser')">Varmepumper</a></li><li><a onclick="showSection('forside','ydelser')">Ladeløsninger</a></li><li><a onclick="showSection('forside','ydelser')">Elinstallationer</a></li><li><a onclick="showSection('forside','ydelser')">Batterianlæg</a></li></ul></div>
+      <div><h4>Firma</h4><ul><li><a onclick="showSection('om-virksomheden')">Om virksomheden</a></li><li><a href="kort.html">Danmarkskort</a></li><li><a onclick="showSection('priser')">Priser og vilkår</a></li><li><a onclick="showSection('cookies')">Cookie- og privatlivspolitik</a></li></ul></div>
+      <div><h4>Kontakt</h4><ul><li class="li">Fuldbyvej 4 B, 4180 Sorø</li><li class="li">Odinsvej 10, 4100 Ringsted</li><li><a href="tel:70605150">70 60 51 50</a></li><li><a href="mailto:kontakt@eltasolar.dk">kontakt@eltasolar.dk</a></li></ul></div>
+    </div>
+    <div class="ft-bottom"><span>© 2026 Elta Solar · CVR 45630897</span><span><a onclick="showSection('cookies')">Cookie- og privatlivspolitik</a><a onclick="showSection('priser')">Priser og vilkår</a></span></div>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="success-modal"><div class="modal-content"><div class="modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div><h3 class="modal-title">Tak for din henvendelse!</h3><p class="modal-text">Vi har modtaget din besked og kontakter dig hurtigst muligt.</p><button class="btn btn-green" onclick="closeModal()" style="padding:13px 28px">Luk</button></div></div>
+
+<script>
+  var nav=document.getElementById('nav');
+  function setNav(){ if(document.body.classList.contains('sub')||window.scrollY>60) nav.classList.add('solid'); else nav.classList.remove('solid'); }
+  window.addEventListener('scroll',setNav,{passive:true});
+
+  function reveal(){document.querySelectorAll('.rv:not(.in)').forEach(function(el){if(el.getBoundingClientRect().top<window.innerHeight-90)el.classList.add('in')})}
+  window.addEventListener('scroll',reveal,{passive:true});
+
+  function animateCount(el){var to=+el.dataset.to,dur=1500,s=null;function step(t){if(!s)s=t;var p=Math.min((t-s)/dur,1);el.textContent=Math.floor((1-Math.pow(1-p,3))*to).toLocaleString('da-DK');if(p<1)requestAnimationFrame(step)}requestAnimationFrame(step)}
+  var cio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){animateCount(e.target);cio.unobserve(e.target)}})},{threshold:.6});
+  function armCounts(){document.querySelectorAll('.count').forEach(function(el){if(!el.dataset.armed){el.dataset.armed=1;cio.observe(el)}})}
+
+  function showSection(id,scrollTo){
+    document.querySelectorAll('.page-section').forEach(function(s){s.classList.remove('active')});
+    var t=document.getElementById('section-'+id); if(t)t.classList.add('active');
+    document.body.classList.toggle('sub', id!=='forside');
+    if(id!=='forside'){history.replaceState(null,'','#'+id)} else if(scrollTo){history.replaceState(null,'','#'+scrollTo)} else {history.replaceState(null,'',location.pathname)}
+    document.getElementById('navlinks').classList.remove('open');
+    setNav();
+    if(scrollTo){setTimeout(function(){var el=document.getElementById(scrollTo);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})},60)} else {window.scrollTo({top:0,behavior:'smooth'})}
+    setTimeout(function(){reveal();armCounts()},80);
+  }
+  function handleHash(){var h=location.hash.substring(1);if(h==='cookies'||h==='priser'||h==='om-virksomheden')showSection(h);else if(h==='ydelser'||h==='kontakt'||h==='segment'||h==='projekter')showSection('forside',h);else showSection('forside')}
+  window.addEventListener('hashchange',handleHash);
+
+  function togglePrice(h){h.closest('.price-section').classList.toggle('open')}
+  document.getElementById('navtoggle').addEventListener('click',function(){document.getElementById('navlinks').classList.toggle('open')});
+
+  // ferie-banner logik bevaret (dato-styret) — kan genbruges til sæsonbesked
+  function closeModal(){document.getElementById('success-modal').classList.remove('active')}
+  document.getElementById('success-modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
+  document.querySelector('.contact-form').addEventListener('submit',function(e){e.preventDefault();var f=this,b=f.querySelector('button[type=submit]'),o=b.innerHTML;b.innerHTML='Sender…';b.disabled=true;fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}}).then(function(r){if(r.ok){document.getElementById('success-modal').classList.add('active');f.reset()}else alert('Der opstod en fejl. Prøv venligst igen.')}).catch(function(){alert('Der opstod en fejl. Prøv venligst igen.')}).finally(function(){b.innerHTML=o;b.disabled=false})});
+
+  (function(){try{if(localStorage.getItem('cookieAccepted'))return}catch(e){}var p=document.createElement('div');p.id='cookie-popup';p.innerHTML='<div class="cookie-content"><div class="cookie-text"><p><strong>Vi bruger cookies</strong></p><p>Vi bruger cookies for at forbedre din oplevelse.</p><span class="cookie-link" onclick="showSection(\'cookies\');document.getElementById(\'cookie-popup\').remove();">Læs cookie- og privatlivspolitik</span></div><button class="btn btn-green" style="padding:12px 22px;font-size:14px" onclick="try{localStorage.setItem(\'cookieAccepted\',\'1\')}catch(e){};this.closest(\'#cookie-popup\').remove();">Accepter</button></div>';document.body.appendChild(p)})();
+
+  setNav();reveal();armCounts();handleHash();
+</script>
+</body>
+</html>
