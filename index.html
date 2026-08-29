@@ -85,10 +85,6 @@
   .hero h1{font-size:clamp(40px,6vw,82px);font-weight:800;max-width:17ch;margin-bottom:24px;opacity:0;animation:up .9s .35s forwards}
   .hero .lead{font-size:clamp(17px,1.6vw,21px);color:rgba(255,255,255,.9);max-width:52ch;margin-bottom:36px;line-height:1.5;opacity:0;animation:up .9s .5s forwards}
   .hero-cta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;opacity:0;animation:up .9s .65s forwards}
-  .hero-play{display:inline-flex;align-items:center;gap:12px;color:#fff;font-weight:600;font-size:15px}
-  .hero-play .circ{width:52px;height:52px;border-radius:50%;border:1.5px solid rgba(255,255,255,.55);display:grid;place-items:center;transition:background .25s,transform .25s}
-  .hero-play:hover .circ{background:rgba(255,255,255,.16);transform:scale(1.06)}
-  .hero-play svg{width:18px;height:18px;margin-left:2px}
   @keyframes up{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
   .scrolldown{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:3;color:rgba(255,255,255,.7);font-size:11px;letter-spacing:.2em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px}
   .scrolldown .bar{width:1px;height:38px;background:linear-gradient(180deg,rgba(255,255,255,.7),transparent);animation:drop 2s ease-in-out infinite}
@@ -170,36 +166,7 @@
   .shot.tall{grid-column:span 2;grid-row:span 2}
   .shot.wide{grid-column:span 2;grid-row:span 1}
 
-  /* VIDEO BAND */
-  .band{position:relative;min-height:560px;display:flex;align-items:center;justify-content:center;overflow:hidden;color:#fff;text-align:center}
-  .band-bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;background-attachment:fixed}
-  .band-sc{position:absolute;inset:0;z-index:1;background:linear-gradient(0deg,rgba(9,22,14,.72),rgba(9,22,14,.5))}
-  .band-c{position:relative;z-index:2;padding:40px}
-  .band-c .kicker{color:#9be7b3}
-  .band-c h2{font-size:clamp(30px,4.4vw,54px);margin:16px 0 26px;max-width:20ch}
-  .play-big{position:relative;width:92px;height:92px;border-radius:50%;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.6);display:grid;place-items:center;margin:0 auto;cursor:pointer;transition:transform .3s,background .3s;backdrop-filter:blur(6px)}
-  .play-big:hover{transform:scale(1.08);background:rgba(255,255,255,.24)}
-  .play-big svg{width:30px;height:30px;margin-left:4px}
-  .play-big::after{content:"";position:absolute;width:92px;height:92px;border-radius:50%;border:1px solid rgba(255,255,255,.4);animation:ripple 2.6s ease-out infinite}
-  @keyframes ripple{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.7);opacity:0}}
-
-  /* TESTIMONIALS */
-  .tests{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-  .test{background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:34px 30px;box-shadow:var(--sh1)}
-  .test .stars{color:var(--orange);letter-spacing:3px;font-size:17px;margin-bottom:18px}
-  .test p{font-size:16.5px;color:var(--ink-2);margin-bottom:22px;line-height:1.6}
-  .test .who{display:flex;align-items:center;gap:13px}
-  .test .av{width:46px;height:46px;border-radius:50%;background:var(--green-tint);color:var(--green);display:grid;place-items:center;font-weight:700;font-family:var(--disp)}
-  .test .nm{font-weight:700;font-size:15px}
-  .test .rl{font-size:13px;color:var(--muted)}
   .ph-note{text-align:center;color:var(--faint);font-size:13px;margin-top:26px;font-style:italic}
-
-  /* PARTNERS */
-  .partners{text-align:center}
-  .partners .lbl{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:34px}
-  .plogos{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px}
-  .plogo{height:76px;min-width:170px;flex:1;max-width:200px;border:1px solid var(--line);border-radius:16px;display:grid;place-items:center;background:var(--paper);color:var(--faint);font-family:var(--disp);font-weight:700;font-size:15px;transition:color .25s,border-color .25s,transform .25s}
-  .plogo:hover{color:var(--green);border-color:var(--green-tint);transform:translateY(-3px)}
 
   /* KONTAKT */
   .kontakt{background:var(--mist)}
@@ -326,7 +293,6 @@
     .cover-grid{grid-template-columns:1fr;gap:40px}
     .show-grid{grid-template-columns:repeat(4,1fr);grid-auto-rows:200px}
     .shot.big{grid-column:span 4}.shot.tall{grid-column:span 2}.shot.wide{grid-column:span 2}
-    .tests{grid-template-columns:1fr}
     .k-grid{grid-template-columns:1fr}
     .ft-grid{grid-template-columns:1fr 1fr}
   }
@@ -341,7 +307,6 @@
     .stats-grid{grid-template-columns:1fr 1fr;gap:30px}
     .show-grid{grid-template-columns:1fr 1fr;grid-auto-rows:160px}
     .shot.big{grid-column:span 2;grid-row:span 2}.shot.tall{grid-column:span 2}.shot.wide{grid-column:span 1}
-    .band-bg{background-attachment:scroll}
     .frow{grid-template-columns:1fr}
     .k-left,.k-right{padding:38px 26px}
     .ft-grid{grid-template-columns:1fr}
@@ -386,7 +351,6 @@
     <div class="hero-cta">
       <a class="btn btn-orange" onclick="showSection('forside','kontakt')">Få et tilbud →</a>
       <a class="btn btn-glass" onclick="showSection('forside','ydelser')">Se vores løsninger</a>
-      <a class="hero-play" href="#film"><span class="circ"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span> Se filmen</a>
     </div>
   </div>
   <div class="scrolldown">Scroll<div class="bar"></div></div>
@@ -480,32 +444,6 @@
       <div class="shot wide rv d1"><img src="hero-billede.png" alt="Markanlæg"><div class="cap"><h4>Solcellepark</h4><span>Storskala</span></div></div>
     </div>
     <p class="ph-note">Billederne er eksempler — erstattes med jeres egne projektfotos.</p>
-  </div>
-</section>
-
-<section class="band" id="film">
-  <div class="band-bg" style="background-image:url('hero-billede.png')"></div>
-  <div class="band-sc"></div>
-  <div class="band-c rv"><span class="kicker">Film</span><h2>Se hvordan vi arbejder — fra tag til stikkontakt</h2><div class="play-big"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div></div>
-</section>
-
-<section class="pad">
-  <div class="wrap">
-    <div class="head center rv"><span class="kicker">Det siger kunderne</span><h2>Kunder i hele landet anbefaler os</h2></div>
-    <div class="tests">
-      <div class="test rv"><div class="stars">★★★★★</div><p>„Her indsætter I en rigtig kundeudtalelse — fx fra Trustpilot eller Google.”</p><div class="who"><div class="av">K</div><div><div class="nm">Kundenavn</div><div class="rl">Solceller · By</div></div></div></div>
-      <div class="test rv d1"><div class="stars">★★★★★</div><p>„Ægte anmeldelser skaber langt mere tillid end tekst vi selv finder på.”</p><div class="who"><div class="av">M</div><div><div class="nm">Kundenavn</div><div class="rl">Varmepumpe · By</div></div></div></div>
-      <div class="test rv d2"><div class="stars">★★★★★</div><p>„Siden kan kobles til jeres Trustpilot, så de nyeste anmeldelser hentes automatisk.”</p><div class="who"><div class="av">J</div><div><div class="nm">Kundenavn</div><div class="rl">Erhverv · By</div></div></div></div>
-    </div>
-    <p class="ph-note">Pladsholder-udtalelser — erstattes med jeres ægte anmeldelser.</p>
-  </div>
-</section>
-
-<section class="pad-sm partners">
-  <div class="wrap rv">
-    <div class="lbl">Vi arbejder med markedets førende mærker</div>
-    <div class="plogos"><div class="plogo">Solcellepaneler</div><div class="plogo">Invertere</div><div class="plogo">Batterier</div><div class="plogo">Ladestandere</div><div class="plogo">Varmepumper</div></div>
-    <p class="ph-note">Pladsholdere — erstattes med jeres leverandørers rigtige logoer.</p>
   </div>
 </section>
 
