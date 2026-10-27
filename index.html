@@ -200,6 +200,9 @@
   .frow{display:grid;grid-template-columns:1fr 1fr;gap:16px}
   .contact-form .btn{width:100%;justify-content:center;margin-top:6px}
 
+  .contact-form .btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+
+
   /* SUBPAGES */
   .sp-hero{padding:150px 0 70px;text-align:center;background:radial-gradient(900px 400px at 80% 0%,var(--green-tint) 0%,transparent 60%),var(--paper);border-bottom:1px solid var(--line)}
   .sp-hero h1{font-size:clamp(32px,4.4vw,54px);margin-bottom:14px}
@@ -476,14 +479,14 @@
             <div class="fg"><label>Telefon <span class="req">*</span></label><input type="tel" name="phone" required></div>
           </div>
           <div class="fg"><label>Email <span class="req">*</span></label><input type="email" name="email" required></div>
-          <div class="fg addr-wrap"><label>Adresse</label><input type="text" name="address" id="address" autocomplete="off" placeholder="Begynd at skrive adressen"><div class="addr-list" id="addr-list" hidden></div></div>
+          <div class="fg addr-wrap"><label>Adresse <span class="req">*</span></label><input type="text" name="address" id="address" autocomplete="off" placeholder="Begynd at skrive adressen" required><div class="addr-list" id="addr-list" hidden></div></div>
           <div class="frow">
-            <div class="fg"><label>Postnr.</label><input type="text" name="postnr" id="postnr" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" autocomplete="postal-code" placeholder="4180"></div>
-            <div class="fg"><label>By</label><input type="text" name="by" id="by" autocomplete="address-level2" placeholder="Udfyldes automatisk" readonly></div>
+            <div class="fg"><label>Postnr. <span class="req">*</span></label><input type="text" name="postnr" id="postnr" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" autocomplete="postal-code" required></div>
+            <div class="fg"><label>By <span class="req">*</span></label><input type="text" name="by" id="by" autocomplete="address-level2" placeholder="Udfyldes automatisk" readonly required></div>
           </div>
-          <div class="fg"><label>Hvad drejer det sig om?</label><select name="inquiry_type"><option>Vælg ydelse…</option><option>Solceller</option><option>Varmepumpe</option><option>Ladeløsning</option><option>Elteknik</option><option>Batterianlæg (BESS)</option><option>Andet</option></select></div>
-          <div class="fg"><label>Besked</label><textarea name="message" placeholder="Fortæl kort om dit projekt…"></textarea></div>
-          <button type="submit" class="btn btn-orange">Send henvendelse →</button>
+          <div class="fg"><label>Hvad drejer det sig om? <span class="req">*</span></label><select name="inquiry_type" required><option value="">Vælg ydelse…</option><option>Solceller</option><option>Varmepumpe</option><option>Ladeløsning</option><option>Elteknik</option><option>Batterianlæg (BESS)</option><option>Andet</option></select></div>
+          <div class="fg"><label>Besked <span class="req">*</span></label><textarea name="message" placeholder="Fortæl kort om dit projekt…" required></textarea></div>
+          <button type="submit" class="btn btn-orange" id="send-btn" disabled>Send henvendelse →</button>
         </form>
       </div>
     </div>
@@ -588,9 +591,10 @@
     var timer=null, items=[], active=-1;
 
     function setCity(nr){
+      var _ok=document.getElementById('send-btn');
       var city=POST[nr];
-      if(city){ by.value=city; by.readOnly=true; by.placeholder='Udfyldes automatisk'; }
-      else { by.value=''; by.readOnly=false; by.placeholder='Ukendt postnr. — skriv by'; }
+      if(city){ by.value=city; by.readOnly=true; by.placeholder='Udfyldes automatisk'; by.dispatchEvent(new Event('input',{bubbles:true})); }
+      else { by.value=''; by.readOnly=false; by.placeholder='Ukendt postnr. — skriv by'; by.dispatchEvent(new Event('input',{bubbles:true})); }
     }
     function hide(){ list.hidden=true; list.innerHTML=''; items=[]; active=-1; }
     function show(rows){
@@ -609,6 +613,7 @@
         post.value=m[1];
         by.value=m[2];
         by.readOnly=true;
+        by.dispatchEvent(new Event('input',{bubbles:true}));
       } else {
         addr.value=row.label+' ';
         addr.focus();
@@ -660,7 +665,25 @@
     });
   })();
 
-    document.querySelector('.contact-form').addEventListener('submit',function(e){e.preventDefault();var f=this,b=f.querySelector('button[type=submit]'),o=b.innerHTML;b.innerHTML='Sender…';b.disabled=true;fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}}).then(function(r){if(r.ok){document.getElementById('success-modal').classList.add('active');f.reset()}else alert('Der opstod en fejl. Prøv venligst igen.')}).catch(function(){alert('Der opstod en fejl. Prøv venligst igen.')}).finally(function(){b.innerHTML=o;b.disabled=false})});
+
+  (function(){
+    var f=document.querySelector('.contact-form');
+    var b=document.getElementById('send-btn');
+    if(!f||!b) return;
+    function ok(){
+      var post=document.getElementById('postnr');
+      var by=document.getElementById('by');
+      var ready=f.checkValidity() && post && /^\d{4}$/.test(post.value) && by && by.value.trim();
+      b.disabled=!ready;
+    }
+    f.addEventListener('input', ok);
+    f.addEventListener('change', ok);
+    var obs=new MutationObserver(ok);
+    if(by) obs.observe(document.getElementById('by'), {attributes:true, attributeFilter:['value']});
+    ok();
+  })();
+
+      document.querySelector('.contact-form').addEventListener('submit',function(e){e.preventDefault();var f=this,b=f.querySelector('button[type=submit]'),o=b.innerHTML;b.innerHTML='Sender…';b.disabled=true;fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}}).then(function(r){if(r.ok){document.getElementById('success-modal').classList.add('active');f.reset()}else alert('Der opstod en fejl. Prøv venligst igen.')}).catch(function(){alert('Der opstod en fejl. Prøv venligst igen.')}).finally(function(){b.innerHTML=o;b.disabled=false})});
 
   (function(){try{if(localStorage.getItem('cookieAccepted'))return}catch(e){}var p=document.createElement('div');p.id='cookie-popup';p.innerHTML='<div class="cookie-content"><div class="cookie-text"><p><strong>Vi bruger cookies</strong></p><p>Vi bruger cookies for at forbedre din oplevelse.</p><span class="cookie-link" onclick="showSection(\'cookies\');document.getElementById(\'cookie-popup\').remove();">Læs cookie- og privatlivspolitik</span></div><button class="btn btn-green" style="padding:12px 22px;font-size:14px" onclick="try{localStorage.setItem(\'cookieAccepted\',\'1\')}catch(e){};this.closest(\'#cookie-popup\').remove();">Accepter</button></div>';document.body.appendChild(p)})();
 
